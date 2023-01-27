@@ -45,8 +45,11 @@ export class Cell {
                 }
             }
         }
-
-        if(!this.board.isWhiteKingUnderAttack && !this.board.isBlackKingUnderAttack) return false;
+        
+        // if(!this.board.isWhiteKingUnderAttack && !this.board.isBlackKingUnderAttack) {
+        //     console.log('a');
+        //     return false;
+        // }
 
         const tmp = this.findKing(color);
         

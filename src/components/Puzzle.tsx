@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { FenAndPgnMethods } from '../methods/FenAndPgnMethods';
 import { FetchMethods } from '../methods/FetchMethods';
 import { Board } from '../models/Board';
@@ -43,7 +43,11 @@ const Puzzle = () => {
         })
         .then(fen => newBoard.createStartPosition(fen))
         .then(res => setBoard(newBoard))
-        }, [])
+    }, [])
+
+    useEffect(() => console.log(fen))
+
+    
     
     function restart() {
         const newBoard = new Board();
@@ -81,6 +85,7 @@ const Puzzle = () => {
             {isWrongMove && <WarningWindow restart={restart}/>}
             {decidedPuzzleWindow && <DecidedPuzzle />}
             <div className={["curtain", (isWrongMove || decidedPuzzleWindow) ? "active" : ""].join(' ')}></div>
+            
         </div>
     )
 }

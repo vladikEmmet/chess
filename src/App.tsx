@@ -58,8 +58,6 @@ const App = () => {
 
   const swapPlayers = () => setCurrentPlayer(currentPlayer?.color === Colors.WHITE ? blackPlayer : whitePlayer)
 
-  const promotePawn = () => setPromotedPawn(null);
-  const indicatePromotedPawn = (cell: Cell) => setPromotedPawn(cell);
   
   const createPopup = (result: string, winner: string, reason: string) => setGameResult({result: result, winner: winner, reason: reason});
   const nominateWinnerByMate = (color: Colors) => createPopup("wins", color, "By mate");
@@ -67,8 +65,23 @@ const App = () => {
   
   const setMode = (mode: string) => setGameMode(mode);
   const setParameters = () => setIsParametersSpecified(true);
-
+  
   const startTimer = () => setIsTimerStarted(true);
+  
+  const promotePawn = () => {
+    if(!promotedPawn || !promotedPawn.figure) return;
+    const enemyColor = promotedPawn.figure.color === Colors.WHITE ? Colors.BLACK : Colors.WHITE;
+    const king = enemyColor === Colors.WHITE ? "isWhiteKingUnderAttack" : "isBlackKingUnderAttack";
+    board[king] = board.getCell(promotedPawn.x, promotedPawn.y).isKingUnderAttack(enemyColor);
+    console.log(board[king]);
+    if(board.getCell(promotedPawn.x, promotedPawn.y).isMate(enemyColor)) {
+      nominateWinnerByMate(promotedPawn.figure.color);
+    }
+    console.log(3);
+    setPromotedPawn(null);
+  };
+
+  const indicatePromotedPawn = (cell: Cell) => setPromotedPawn(cell);
 
   const goBack = () => {
     setIsParametersSpecified(false);
@@ -97,7 +110,8 @@ const App = () => {
         nominateWinnerByMate={nominateWinnerByMate}
         currentPlayer={currentPlayer}
         swapPlayers={swapPlayers}
-        indicatePromotedPawn={indicatePromotedPawn} />
+        indicatePromotedPawn={indicatePromotedPawn} 
+      />
       <LostFigures figures={board.lostWhiteFigures} addValue={addWhitePlayerValue} diff={whiteValue > blackValue ? whiteValue - blackValue : 0} />
       <LostFigures figures={board.lostBlackFigures} addValue={addBlackPlayerValue} diff={whiteValue < blackValue ? blackValue - whiteValue : 0} />
       <GameOverPopUp visibility={gameResult.winner !== null} info={gameResult} goBack={goBack} />

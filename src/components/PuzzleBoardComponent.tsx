@@ -21,16 +21,20 @@ interface IFigures {
   [index: string]: string;
 }
 
-const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, pgnArr, playersColor, createWarningWindow, removePgnElement, showCongrats, indicatePromotedPawn, title}) => {
+const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, pgnArr, playersColor, createWarningWindow, removePgnElement, showCongrats, indicatePromotedPawn, title,}) => {
     const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
-    const [columns, setColumns] = useState(["a", "b", "c", "d", "e", "f", "g", "h"]);
-    const [figures, setFigures] = useState<IFigures>({
+    const [columns] = useState(["a", "b", "c", "d", "e", "f", "g", "h"]);
+    const [figures] = useState<IFigures>({
       "Q": FigureNames.QUEEN,
       "K": FigureNames.KING,
       "R": FigureNames.ROOK,
       "N": FigureNames.KNIGHT,
       "B": FigureNames.BISHOP,
       "P": FigureNames.PAWN,
+    })
+
+    useEffect(() => {
+      console.log(pgnArr);
     })
 
     function handleClick(cell: Cell) {
