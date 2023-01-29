@@ -13,12 +13,13 @@ interface BoardProps {
   swapPlayers: () => void;
   isPuzzle: boolean;
   nominateWinnerByMate: (color: Colors) => void;
+  nominateDrawByStaleMate: () => void;
   indicatePromotedPawn: (cell: Cell) => void;
   startTimer: () => void;
 }
 
 
-export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, startTimer, nominateWinnerByMate, indicatePromotedPawn, swapPlayers}) => {
+export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, startTimer, nominateWinnerByMate,  nominateDrawByStaleMate, indicatePromotedPawn, swapPlayers}) => {
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null); 
   const curColor = currentPlayer?.color ? currentPlayer?.color.slice(0, 1).toUpperCase() + currentPlayer?.color.slice(1) : ""
   
@@ -32,6 +33,10 @@ export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, 
       }
       if(cell.isMate(color) && cell.figure && cell.figure.color) {
         nominateWinnerByMate(cell.figure?.color);
+        return;
+      }
+      if(board.isStalemate(color)) {
+        nominateDrawByStaleMate();
         return;
       }
       swapPlayers();

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import "./App.css";
+import BackToMenu from './components/BackToMenu';
 import { BoardComponent } from './components/BoardComponent';
 import ChangePawn from './components/ChangePawn';
 import GameOverPopUp, { IGameInfo } from './components/GameOverPopUp';
@@ -59,9 +60,10 @@ const App = () => {
   const swapPlayers = () => setCurrentPlayer(currentPlayer?.color === Colors.WHITE ? blackPlayer : whitePlayer)
 
   
-  const createPopup = (result: string, winner: string, reason: string) => setGameResult({result: result, winner: winner, reason: reason});
+  const createPopup = (result: string, winner: string | null, reason: string) => setGameResult({result: result, winner: winner, reason: reason});
   const nominateWinnerByMate = (color: Colors) => createPopup("wins", color, "By mate");
   const nominateWinnerByTimeout = (color: Colors) => createPopup("wins", color, "By timeout");
+  const nominateDrawByStaleMate = () => createPopup("Draw", null, "By stalemate");
   
   const setMode = (mode: string) => setGameMode(mode);
   const setParameters = () => setIsParametersSpecified(true);
@@ -71,13 +73,10 @@ const App = () => {
   const promotePawn = () => {
     if(!promotedPawn || !promotedPawn.figure) return;
     const enemyColor = promotedPawn.figure.color === Colors.WHITE ? Colors.BLACK : Colors.WHITE;
-    const king = enemyColor === Colors.WHITE ? "isWhiteKingUnderAttack" : "isBlackKingUnderAttack";
-    board[king] = board.getCell(promotedPawn.x, promotedPawn.y).isKingUnderAttack(enemyColor);
-    console.log(board[king]);
+
     if(board.getCell(promotedPawn.x, promotedPawn.y).isMate(enemyColor)) {
       nominateWinnerByMate(promotedPawn.figure.color);
     }
-    console.log(3);
     setPromotedPawn(null);
   };
 
@@ -94,6 +93,10 @@ const App = () => {
   
   return (
     <div className="app">
+      <BackToMenu handleClick={() => {
+        setIsParametersSpecified(false);
+        restart(gameMode);
+      }} />
       <Timer
         restart={restart}
         mode={gameMode}
@@ -108,16 +111,17 @@ const App = () => {
         startTimer={startTimer}
         setBoard={setBoard}
         nominateWinnerByMate={nominateWinnerByMate}
+        nominateDrawByStaleMate={nominateDrawByStaleMate}
         currentPlayer={currentPlayer}
         swapPlayers={swapPlayers}
         indicatePromotedPawn={indicatePromotedPawn} 
       />
       <LostFigures figures={board.lostWhiteFigures} addValue={addWhitePlayerValue} diff={whiteValue > blackValue ? whiteValue - blackValue : 0} />
       <LostFigures figures={board.lostBlackFigures} addValue={addBlackPlayerValue} diff={whiteValue < blackValue ? blackValue - whiteValue : 0} />
-      <GameOverPopUp visibility={gameResult.winner !== null} info={gameResult} goBack={goBack} />
+      <GameOverPopUp visibility={gameResult.result.length !== 0} info={gameResult} goBack={goBack} />
       {!isParametersSpecified && <ModeSelection setParameters={setParameters} setTimer={setTimer} setMode={setMode} time={whiteTime} mode={gameMode} />}
       {promotedPawn && <ChangePawn color={promotedPawn?.figure?.color} promotedPawn={promotedPawn} board={board} handleClick={promotePawn} />}
-      <div className={["curtain", gameResult.winner !== null ? "active" : ""].join(' ')}></div>
+      <div className={["curtain", gameResult.result.length !== 0 ? "active" : ""].join(' ')}></div>
     </div>
   )
 }

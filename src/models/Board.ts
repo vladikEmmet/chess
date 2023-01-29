@@ -1,7 +1,7 @@
 import { Cell } from "./Cell";
 import { Colors } from "./Colors";
 import { Bishop } from "./figures/Bishop";
-import { Figure } from "./figures/Figure";
+import { Figure, FigureNames } from "./figures/Figure";
 import { King } from "./figures/King";
 import { Knight } from "./figures/Knight";
 import { Pawn } from "./figures/Pawn";
@@ -113,6 +113,29 @@ export class Board {
         newBoard.isBlackKingUnderAttack = this.isBlackKingUnderAttack;
         newBoard.isWhiteKingUnderAttack = this.isWhiteKingUnderAttack;
         return newBoard;
+    }
+
+    public isStalemate(color: Colors) {
+        if(this.isBlackKingUnderAttack || this.isBlackKingUnderAttack) return false;
+        const king = this.cells[0][0].findKing(color);
+        if(!king || !king.figure) return false;
+        if(((this.cells[king.y][king.x + 1] && this.getCell(king.x + 1, king.y).isEmpty() && !king.isCellUnderAttack(king.board.getCell(king.x + 1, king.y), king.figure.color)) ||
+            (this.cells[king.y][king.x - 1] && this.getCell(king.x - 1, king.y).isEmpty() && !king.isCellUnderAttack(king.board.getCell(king.x - 1, king.y), king.figure.color)) ||
+            (this.cells[king.y + 1] && this.getCell(king.x, king.y + 1).isEmpty() && !king.isCellUnderAttack(king.board.getCell(king.x, king.y + 1), king.figure.color)) ||
+            (this.cells[king.y - 1] && this.getCell(king.x, king.y - 1).isEmpty() && !king.isCellUnderAttack(king.board.getCell(king.x, king.y - 1), king.figure.color)) ||
+            (this.cells[king.y + 1] && this.cells[king.y + 1][king.x + 1] && this.getCell(king.x + 1, king.y + 1).isEmpty() && !king.isCellUnderAttack(this.getCell(king.x + 1, king.y + 1), king.figure.color)) ||
+            (this.cells[king.y - 1] && this.cells[king.y - 1][king.x + 1] && this.getCell(king.x + 1, king.y - 1).isEmpty() && !king.isCellUnderAttack(this.getCell(king.x + 1, king.y - 1), king.figure.color)) ||
+            (this.cells[king.y + 1] && this.cells[king.y + 1][king.x - 1] && this.getCell(king.x - 1, king.y + 1).isEmpty() && !king.isCellUnderAttack(this.getCell(king.x - 1, king.y + 1), king.figure.color)) ||
+            (this.cells[king.y - 1] && this.cells[king.y - 1][king.x - 1] && this.getCell(king.x - 1, king.y - 1).isEmpty() && !king.isCellUnderAttack(this.getCell(king.x - 1, king.y - 1), king.figure.color)))) {
+                return false;
+        }
+        for(const row of this.cells) {
+            for(const cell of row) {
+                if(cell.figure && cell.figure.color === color && cell.figure.name !== FigureNames.KING) return false;
+            }
+        }
+
+        return true;
     }
     
     public getCell(x: number, y: number) {

@@ -293,5 +293,26 @@ body {
   cursor: pointer;
 }
 
-.change-pawn-container {
+.goback-btn {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: rgb(128, 141, 6);
+  font-size: 20px;
+  position: absolute;
+  top: 10vh;
+  left: 10vw;
+}
+
+.goback-btn:hover::before {
+  content: "←";
+}
+
+.lost {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: calc(64px * 8);
 }

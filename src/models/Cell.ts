@@ -45,24 +45,17 @@ export class Cell {
                 }
             }
         }
-        
-        // if(!this.board.isWhiteKingUnderAttack && !this.board.isBlackKingUnderAttack) {
-        //     console.log('a');
-        //     return false;
-        // }
 
         const tmp = this.findKing(color);
         
         if(!tmp || !tmp.figure) return;
 
         const king = this.board.getCell(tmp.x, tmp.y);
-        
 
         if(!king || !king.figure) return;
         
         const attacker = findAttacker(king);
         if(!attacker || ! attacker.figure) return false;
-        
         if(king.figure.canMove(attacker)) return false;
 
         if(((this.board.cells[king.y][king.x + 1] && this.board.getCell(king.x + 1, king.y).isEmpty() && !this.isCellUnderAttack(this.board.getCell(king.x + 1, king.y), king.figure.color)) ||
@@ -141,8 +134,8 @@ export class Cell {
 
         for(let x = min + 1; x < max; x++) {
             if(this.isCellUnderAttack(this.board.getCell(x, this.y), this.color)) return false;
-            return true;
         }
+        return true;
     }
     
     checkVertical(target: Cell) {
@@ -151,8 +144,8 @@ export class Cell {
 
         for(let y = min + 1; y < max; y++) {
             if(this.isCellUnderAttack(this.board.getCell(this.x, y), this.color)) return false;
-            return true;
         }
+        return true;
     }
 
     checkDiagonal(target: Cell) {
