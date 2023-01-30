@@ -33,9 +33,10 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
       "P": FigureNames.PAWN,
     })
 
-    useEffect(() => {
-      console.log(pgnArr);
-    })
+    const highLightCells = () => {
+      board.highLightCells(selectedCell)
+      updateBoard()
+    };
 
     function handleClick(cell: Cell) {
       try {
@@ -51,7 +52,6 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
             return;
           }
 
-          console.log(pgnArr[0].trim().split(" "));
           if(pgnArr[0].trim().split(' ').length <= 1) {
             showCongrats();
             return;
@@ -146,11 +146,6 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
     useEffect(() => {
       highLightCells()
     }, [selectedCell])
-  
-    function highLightCells() {
-      board.highLightCells(selectedCell)
-      updateBoard()
-    }
   
     function updateBoard() {
       const newBoard = board.copyBoard();

@@ -5,7 +5,7 @@ export class FetchMethods {
             return await response.json();
         } catch(e) {
             alert(`Error: ${e}
-            Please, try again later:(`)
+            Please, reload your page and try again:(`)
         }
     }
 }

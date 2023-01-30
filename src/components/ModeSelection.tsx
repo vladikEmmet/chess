@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import {FC, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 
 interface ModeSelectionProps {
@@ -10,6 +10,11 @@ interface ModeSelectionProps {
 }
 
 const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, setParameters, time, mode}) => {
+
+  useEffect(() => {
+    document.title = "Chess"
+  }, []);
+
   return (
     <div className="mode-selection-container">
         <div className="mode-selection-settings">
@@ -19,7 +24,7 @@ const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, setParameters
             </div>
             <hr />
             <div className="selected-settings">
-                <h2>Time: {time}</h2>
+                <h2>Time: {`${time} sec`}</h2>
                 <h2>Mode: {mode === null ? "none" : mode}</h2>
             </div>
             <hr />

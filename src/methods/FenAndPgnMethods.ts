@@ -1,5 +1,3 @@
-import { Board } from "../models/Board";
-
 const {converters} = require('fen-reader');
 
 export class FenAndPgnMethods {

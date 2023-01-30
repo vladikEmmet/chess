@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useEffect } from 'react';
+import { useState, useLayoutEffect, useEffect } from 'react';
 import { FenAndPgnMethods } from '../methods/FenAndPgnMethods';
 import { FetchMethods } from '../methods/FetchMethods';
 import { Board } from '../models/Board';
@@ -45,10 +45,10 @@ const Puzzle = () => {
         .then(res => setBoard(newBoard))
     }, [])
 
-    useEffect(() => console.log(fen))
+    useEffect(() => {
+        console.log('puzzle render');
+    })
 
-    
-    
     function restart() {
         const newBoard = new Board();
         newBoard.initCells();
@@ -70,17 +70,23 @@ const Puzzle = () => {
     
     return (
         <div className="puzzle">
-            <PuzzleBoardComponent 
-                pgnArr={pgnArr} 
-                board={board} 
-                setBoard={setBoard} 
-                playersColor={playersColor} 
-                indicatePromotedPawn={indicatePromotedPawn} 
-                createWarningWindow={createWarningWindow} 
-                removePgnElement={removePgnElement} 
-                showCongrats={showCongrats}
-                title={info.title}
-            />
+            {
+                fen.length === 0 
+                    ?
+                    <h1 style={{color: "orange", textAlign: "center"}}>Loading...</h1>
+                    :
+                    <PuzzleBoardComponent 
+                        pgnArr={pgnArr} 
+                        board={board} 
+                        setBoard={setBoard} 
+                        playersColor={playersColor} 
+                        indicatePromotedPawn={indicatePromotedPawn} 
+                        createWarningWindow={createWarningWindow} 
+                        removePgnElement={removePgnElement} 
+                        showCongrats={showCongrats}
+                        title={info.title}
+                    />
+            }
             {promotedPawn && <ChangePawn color={promotedPawn.figure?.color} promotedPawn={promotedPawn} board={board} handleClick={promotePawn} />}
             {isWrongMove && <WarningWindow restart={restart}/>}
             {decidedPuzzleWindow && <DecidedPuzzle />}

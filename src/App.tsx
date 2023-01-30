@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import "./App.css";
 import BackToMenu from './components/BackToMenu';
 import { BoardComponent } from './components/BoardComponent';
@@ -29,13 +29,16 @@ const App = () => {
   
   useEffect(() => {
     restart(gameMode || "classic");
-    document.title = gameMode === "classic" ? "Classic chess" : "Chess 960";
   }, [gameMode])
 
-  function setTimer(time: number) {
+  useEffect(() => {
+    console.log('render');
+  })
+
+  let setTimer = useCallback((time: number) => {
     setWhiteTime(time);
     setBlackTime(time);
-  }
+  }, []);
 
   function restart(mode: string | null) {
     const newBoard = new Board();
@@ -54,6 +57,8 @@ const App = () => {
     setGameResult({result: "", winner: null, reason: ""})
   }
 
+  const restartTimer = () => restart(gameMode);
+
   const addWhitePlayerValue = (value: number) => setWhiteValue(value);
   const addBlackPlayerValue = (value: number) => setBlackValue(value);
 
@@ -65,10 +70,13 @@ const App = () => {
   const nominateWinnerByTimeout = (color: Colors) => createPopup("wins", color, "By timeout");
   const nominateDrawByStaleMate = () => createPopup("Draw", null, "By stalemate");
   
-  const setMode = (mode: string) => setGameMode(mode);
-  const setParameters = () => setIsParametersSpecified(true);
+  const setMode = useCallback((mode: string) => setGameMode(mode), []);
+  const setParameters = () => {
+    setIsParametersSpecified(true);
+    document.title = gameMode === "960" ? "Chess 960" : "Classic chess";
+  }
   
-  const startTimer = () => setIsTimerStarted(true);
+  const startTimer = useCallback(() => setIsTimerStarted(true), []);
   
   const promotePawn = () => {
     if(!promotedPawn || !promotedPawn.figure) return;
@@ -85,8 +93,6 @@ const App = () => {
   const goBack = () => {
     setIsParametersSpecified(false);
     restart(gameMode);
-    setWhiteTime(300);
-    setBlackTime(300);
     setIsTimerStarted(false);
   }
 
@@ -98,11 +104,13 @@ const App = () => {
         restart(gameMode);
       }} />
       <Timer
-        restart={restart}
+        restart={restartTimer}
         mode={gameMode}
         currentPlayer={currentPlayer}
         blackTime={blackTime}
         whiteTime={whiteTime}
+        lostWhiteFigures={board.lostWhiteFigures}
+        lostBlackFigures={board.lostBlackFigures}
         isTimerStarted={isTimerStarted}
         nominateWinnerByTimeout={nominateWinnerByTimeout} />
       <BoardComponent

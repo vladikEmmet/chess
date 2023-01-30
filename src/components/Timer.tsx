@@ -1,22 +1,25 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Colors } from '../models/Colors';
+import { Figure } from '../models/figures/Figure';
 import { Player } from '../models/Player';
 
 interface TimerProps {
     currentPlayer: Player | null;
-    restart: (mode: string | null) => void;
+    restart: () => void;
     mode: string | null;
     blackTime: number;
     whiteTime: number;
     isTimerStarted: boolean;
+    lostWhiteFigures: Figure[];
+    lostBlackFigures: Figure[];
     nominateWinnerByTimeout: (color: Colors) => void;
 }
 
-const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout, blackTime, whiteTime, isTimerStarted, mode}) => {
+const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout, blackTime, whiteTime, isTimerStarted, lostWhiteFigures, lostBlackFigures}) => {
     const[blackTimer, setBlackTimer] = useState(blackTime);
     const[whiteTimer, setWhiteTimer] = useState(whiteTime);
     const timer = useRef<null | ReturnType<typeof setInterval>>(null);
-    
+
     useEffect(() => {
         if(isTimerStarted) {
             startTimer();
@@ -26,7 +29,9 @@ const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout,
     useEffect(() => {
         if(whiteTimer <= 0 && timer.current) {
             clearInterval(timer.current);
+            if(lostBlackFigures)
             nominateWinnerByTimeout(Colors.BLACK);
+            return;
         }
         if(blackTimer <= 0 && timer.current) {
             clearInterval(timer.current);
@@ -58,7 +63,7 @@ const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout,
     const handleRestart = () => {
         setWhiteTimer(whiteTime);
         setBlackTimer(blackTime);
-        restart(mode);
+        restart();
     }
 
   return (

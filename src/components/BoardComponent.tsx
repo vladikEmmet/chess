@@ -22,8 +22,13 @@ interface BoardProps {
 export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, startTimer, nominateWinnerByMate,  nominateDrawByStaleMate, indicatePromotedPawn, swapPlayers}) => {
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null); 
   const curColor = currentPlayer?.color ? currentPlayer?.color.slice(0, 1).toUpperCase() + currentPlayer?.color.slice(1) : ""
+
+  const highLightCells = () => {
+    board.highLightCells(selectedCell)
+    updateBoard()
+  };
   
-  function handleClick(cell: Cell) {
+  const handleClick = (cell: Cell) => {
     if(selectedCell && selectedCell !== cell && selectedCell.figure?.canMove(cell)) {
       selectedCell.moveFigure(cell);
       startTimer();
@@ -51,11 +56,6 @@ export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, 
   useEffect(() => {
     highLightCells()
   }, [selectedCell])
-
-  function highLightCells() {
-    board.highLightCells(selectedCell)
-    updateBoard()
-  }
 
   function updateBoard() {
     const newBoard = board.copyBoard();

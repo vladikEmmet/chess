@@ -306,6 +306,7 @@ body {
 
 .goback-btn:hover::before {
   content: "←";
+  font-weight: bold;
 }
 
 .lost {
