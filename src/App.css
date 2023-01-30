@@ -24,6 +24,14 @@ body {
   margin-left: 20px;
 }
 
+.board.rotated {
+  transform: rotate(180deg);
+}
+
+.board.rotated .cell {
+  transform: rotate(180deg);
+}
+
 .board-container h3 {
   font-size: 18px;
   text-align: center;
@@ -156,8 +164,8 @@ body {
   width: 100%;
   height: 100%;
   margin: auto;
-  position: absolute;
-  z-index: 99999;
+  /* position: absolute; */
+  /* z-index: 99999; */
   background: #110600;
 }
 
@@ -202,7 +210,8 @@ body {
   margin-bottom: 10px;
 }
 
-.mode-selection-settings button {
+.mode-selection-settings button,
+.mode-selection-play-game-btn {
   margin: 0 10px;
   background: #412c01;
   border: none;
@@ -218,7 +227,11 @@ body {
 }
 
 .mode-selection-play-game-btn {
-  width: 15%;
+  margin-top: 5px;
+  padding-top: 7px;
+  display: inline-block;
+  text-decoration: none;
+  width: 13%;
 }
 
 .puzzle-link {

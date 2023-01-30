@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 interface ModeSelectionProps {
     setTimer: (time: number) => void;
     setMode: (mode: string) => void;
-    setParameters: () => void;
     time: number;
     mode: string | null;
 }
 
-const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, setParameters, time, mode}) => {
+const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, time, mode}) => {
 
   useEffect(() => {
     document.title = "Chess"
@@ -39,8 +38,8 @@ const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, setParameters
                 <button onClick={() => setMode("classic")}>Classic Chess</button>
                 <button onClick={() => setMode("960")}>Сhess960</button>
             </div>
-            <button className="mode-selection-play-game-btn" onClick={setParameters}>Play</button>
-            <Link className="puzzle-link" to="puzzle" onClick={setParameters}>Random Puzzle</Link>
+            <Link to="singleplayer" className="mode-selection-play-game-btn">Play</Link>
+            <Link className="puzzle-link" to="puzzle">Random Puzzle</Link>
         </div>
       </div>
   )

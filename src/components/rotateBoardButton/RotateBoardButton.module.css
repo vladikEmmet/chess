@@ -1,0 +1,17 @@
+.rotate-board-container {
+  position: absolute;
+  right: 10vw;
+  top: 10vh;
+  color: rgb(128, 141, 6);
+  cursor: pointer;
+}
+
+.rotate-board-container:hover .rotate-board-icon {
+  transform: rotate(90deg);
+  font-size: 34px;
+}
+
+.rotate-board-icon {
+  font-size: 30px;
+  transition: 0.2s all;
+}

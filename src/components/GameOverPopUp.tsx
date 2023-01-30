@@ -1,4 +1,5 @@
 import React, {FC} from 'react'
+import { Link } from 'react-router-dom';
 
 export interface IGameInfo {
     result: string;
@@ -9,10 +10,9 @@ export interface IGameInfo {
 interface GameOverPopUpProps {
     visibility: boolean;
     info: IGameInfo;
-    goBack: () => void;
 }
 
-const GameOverPopUp: FC<GameOverPopUpProps> = ({visibility, info, goBack}) => {
+const GameOverPopUp: FC<GameOverPopUpProps> = ({visibility, info}) => {
     return (
         <div className={["popup-container", visibility ? "active" : ""].join(' ')}>
             <h1 className="popup-result">
@@ -21,7 +21,7 @@ const GameOverPopUp: FC<GameOverPopUpProps> = ({visibility, info, goBack}) => {
             <h2 className='popup-reason'>
                 {info.reason}
             </h2>
-            <button onClick={goBack}>Go back</button>
+            <Link to="/">Go back</Link>
         </div> 
     )
 }

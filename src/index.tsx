@@ -1,25 +1,21 @@
-import React, { Suspense, lazy } from 'react';
+import {StrictMode, Suspense} from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 import Loader from './components/loader/Loader';
-// import Puzzle from './components/Puzzle';
-
-const Puzzle = lazy(() => import('./components/Puzzle'));
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <BrowserRouter>
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="puzzle" element={<Puzzle/>} />
+          <Route path="/*" element={<App />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
-  </React.StrictMode>
+  </StrictMode>
 );
 

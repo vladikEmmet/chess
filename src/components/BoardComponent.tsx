@@ -16,10 +16,11 @@ interface BoardProps {
   nominateDrawByStaleMate: () => void;
   indicatePromotedPawn: (cell: Cell) => void;
   startTimer: () => void;
+  isRotated: boolean;
 }
 
 
-export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, startTimer, nominateWinnerByMate,  nominateDrawByStaleMate, indicatePromotedPawn, swapPlayers}) => {
+export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, isRotated, startTimer, nominateWinnerByMate,  nominateDrawByStaleMate, indicatePromotedPawn, swapPlayers}) => {
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null); 
   const curColor = currentPlayer?.color ? currentPlayer?.color.slice(0, 1).toUpperCase() + currentPlayer?.color.slice(1) : ""
 
@@ -65,7 +66,7 @@ export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, 
   return (
     <div className="board-container">
       <h3>{curColor} to move</h3>
-      <div className="board">
+      <div className={["board", isRotated ? "rotated" : ""].join(' ')}>
         {board.cells.map((row, index) => 
           <React.Fragment key={index}>
             {row.map(cell =>
