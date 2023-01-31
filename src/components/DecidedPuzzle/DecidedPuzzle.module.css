@@ -1,0 +1,11 @@
+.puzzle-back-to-menu-link {
+  display: inline-block;
+  text-decoration: none;
+  padding-top: 10px;
+  height: 20%;
+  width: 12%;
+  color: #f0e869;
+  background: #9a5323;
+  letter-spacing: 0.7px;
+  cursor: pointer;
+}

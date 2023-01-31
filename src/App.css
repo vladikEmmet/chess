@@ -72,11 +72,6 @@ body {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.difference {
-  color: #f0e869;
-  text-align: center;
-}
-
 .curtain {
   position: absolute;
   width: 100%;
@@ -132,40 +127,27 @@ body {
   height: 30vh;
 }
 
-.change-pawn-container {
-  z-index: 3;
+.game-over-button {
+  text-decoration: none;
   display: flex;
-  justify-content: space-around;
-  position: absolute;
-  width: 30%;
-  height: 20%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 10%;
+  padding: 5% 0;
   background: #9a5323;
-}
-
-.change-pawn-list {
-  display: flex;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 25px;
-}
-
-.change-pawn-list img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
+  color: #f0e869;
+  border: none;
+  height: 5%;
+  width: 30%;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .mode-selection-container {
   width: 100%;
   height: 100%;
   margin: auto;
-  /* position: absolute; */
-  /* z-index: 99999; */
   background: #110600;
 }
 
@@ -270,63 +252,8 @@ body {
   cursor: pointer;
 }
 
-.puzzle-back-to-menu-link {
-  display: inline-block;
-  text-decoration: none;
-  padding-top: 10px;
-  height: 20%;
-  width: 12%;
-  color: #f0e869;
-  background: #9a5323;
-  letter-spacing: 0.7px;
-  cursor: pointer;
-}
-
 .puzzle-title {
   font-size: 20px;
   text-align: center;
   color: #f0e869;
-}
-
-.timer {
-  text-align: center;
-}
-
-.timer h2 {
-  color: #f0e869;
-  font-size: 28px;
-  margin: 15vh 0;
-}
-
-.timer button {
-  border: none;
-  background: none;
-  color: #f0e869;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.goback-btn {
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  color: rgb(128, 141, 6);
-  font-size: 20px;
-  position: absolute;
-  top: 10vh;
-  left: 10vw;
-}
-
-.goback-btn:hover::before {
-  content: "←";
-  font-weight: bold;
-}
-
-.lost {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  height: calc(64px * 8);
 }

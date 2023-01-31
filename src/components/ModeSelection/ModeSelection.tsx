@@ -1,5 +1,6 @@
 import {FC, useEffect} from 'react'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import styles from "./ModeSelection.module.css"
 
 interface ModeSelectionProps {
     setTimer: (time: number) => void;
@@ -15,11 +16,11 @@ const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, time, mode}) 
   }, []);
 
   return (
-    <div className="mode-selection-container">
-        <div className="mode-selection-settings">
-            <div className="mode-selection-titles">
-                <h1 className="mode-selection-title">Welcome to Chess!</h1>
-                <h4 className="mode-selection-title">Specify the required parameters</h4>
+    <div className={styles["mode-selection-container"]}>
+        <div className={styles["mode-selection-settings"]}>
+            <div className={styles["mode-selection-titles"]}>
+                <h1 className={styles["mode-selection-title"]}>Welcome to Chess!</h1>
+                <h4 className={styles["mode-selection-title"]}>Specify the required parameters</h4>
             </div>
             <hr />
             <div className="selected-settings">
@@ -33,13 +34,16 @@ const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, time, mode}) 
                 <button onClick={() => setTimer(300)}>5 minutes</button>
                 <button onClick={() => setTimer(600)}>10 minutes</button>
             </div>
-            <div className="mode-selection-mode-settings mode-settings">
+            <div className={[styles["mode-selection-mode-settings"], styles["mode-settings"]].join(' ')}>
                 <h2>Mode</h2>
                 <button onClick={() => setMode("classic")}>Classic Chess</button>
                 <button onClick={() => setMode("960")}>Сhess960</button>
             </div>
-            <Link to="singleplayer" className="mode-selection-play-game-btn">Play</Link>
-            <Link className="puzzle-link" to="puzzle">Random Puzzle</Link>
+            <Link to="singleplayer" className={styles["mode-selection-play-game-btn"]}>Play</Link>
+            <div className={styles["another-models-links"]}>
+                <Link className={styles["puzzle-link"]} to="puzzle">Random Puzzle</Link>
+                <Link className={styles["computer-link"]} to="game-with-computer">Play with computer</Link>
+            </div>
         </div>
       </div>
   )

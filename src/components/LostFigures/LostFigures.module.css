@@ -1,0 +1,13 @@
+.lost {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: calc(64px * 8);
+}
+
+.difference {
+  color: #f0e869;
+  text-align: center;
+}

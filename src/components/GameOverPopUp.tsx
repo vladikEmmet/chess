@@ -21,7 +21,7 @@ const GameOverPopUp: FC<GameOverPopUpProps> = ({visibility, info}) => {
             <h2 className='popup-reason'>
                 {info.reason}
             </h2>
-            <Link to="/">Go back</Link>
+            <Link to="/" className="game-over-button">Go back</Link>
         </div> 
     )
 }

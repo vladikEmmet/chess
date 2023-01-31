@@ -1,10 +1,10 @@
 import { FC, useEffect, useState, useCallback } from 'react';
 import { BoardComponent } from './BoardComponent';
-import ChangePawn from './ChangePawn';
+import ChangePawn from './ChangePawn/ChangePawn';
 import GameOverPopUp, { IGameInfo } from './GameOverPopUp';
-import LostFigures from './LostFigures';
+import LostFigures from './LostFigures/LostFigures';
 import RotateBoardButton from './rotateBoardButton/RotateBoardButton';
-import Timer from './Timer';
+import Timer from './Timer/Timer';
 import { Board } from '../models/Board';
 import { Cell } from '../models/Cell';
 import { Colors } from '../models/Colors';

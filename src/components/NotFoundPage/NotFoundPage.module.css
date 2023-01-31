@@ -1,0 +1,17 @@
+.not-found-page-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #110600;
+  font-size: 24px;
+  font-weight: bold;
+  color: #f0e869;
+}
+
+.not-found-page-container span {
+  font-size: 40px;
+  display: inline-block;
+  margin: 0 15px;
+}

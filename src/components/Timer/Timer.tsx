@@ -1,7 +1,8 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { Colors } from '../models/Colors';
-import { Figure } from '../models/figures/Figure';
-import { Player } from '../models/Player';
+import { Colors } from '../../models/Colors';
+import { Figure } from '../../models/figures/Figure';
+import { Player } from '../../models/Player';
+import styles from "./Timer.module.css";
 
 interface TimerProps {
     currentPlayer: Player | null;
@@ -67,7 +68,7 @@ const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout,
     }
 
   return (
-    <div className="timer">
+    <div className={styles.timer}>
         <h2>{blackTimer}</h2>
         <div>
             <button onClick={handleRestart}>Restart</button>

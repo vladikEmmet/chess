@@ -1,0 +1,17 @@
+.timer {
+  text-align: center;
+}
+
+.timer h2 {
+  color: #f0e869;
+  font-size: 28px;
+  margin: 15vh 0;
+}
+
+.timer button {
+  border: none;
+  background: none;
+  color: #f0e869;
+  font-size: 16px;
+  cursor: pointer;
+}

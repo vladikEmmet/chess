@@ -4,8 +4,8 @@ import { FetchMethods } from '../methods/FetchMethods';
 import { Board } from '../models/Board';
 import { Cell } from '../models/Cell';
 import { Colors } from '../models/Colors';
-import ChangePawn from './ChangePawn';
-import DecidedPuzzle from './DecidedPuzzle';
+import ChangePawn from './ChangePawn/ChangePawn';
+import DecidedPuzzle from './DecidedPuzzle/DecidedPuzzle';
 import PuzzleBoardComponent from './PuzzleBoardComponent';
 import WarningWindow from './WarningWindow';
 

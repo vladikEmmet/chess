@@ -1,15 +1,16 @@
 import React, {FC} from 'react'
-import blackBishop from '../assets/black-bishop.png';
-import whiteBishop from '../assets/white-bishop.png';
-import blackRook from '../assets/black-rook.png';
-import whiteRook from '../assets/white-rook.png';
-import blackQueen from '../assets/black-queen.png';
-import whiteQueen from '../assets/white-queen.png';
-import blackKnight from '../assets/black-knight.png';
-import whiteKnight from '../assets/white-knight.png';
-import { Colors } from '../models/Colors';
-import { Cell } from '../models/Cell';
-import { Board } from '../models/Board';
+import blackBishop from '../../assets/black-bishop.png';
+import whiteBishop from '../../assets/white-bishop.png';
+import blackRook from '../../assets/black-rook.png';
+import whiteRook from '../../assets/white-rook.png';
+import blackQueen from '../../assets/black-queen.png';
+import whiteQueen from '../../assets/white-queen.png';
+import blackKnight from '../../assets/black-knight.png';
+import whiteKnight from '../../assets/white-knight.png';
+import { Colors } from '../../models/Colors';
+import { Cell } from '../../models/Cell';
+import { Board } from '../../models/Board';
+import styles from "./ChangePawn.module.css";
 
 interface ChangePawnProps {
     color: Colors | undefined;
@@ -24,7 +25,7 @@ const ChangePawn: FC<ChangePawnProps> = ({color, promotedPawn, board, handleClic
     const figures = color === Colors.WHITE ? [whiteBishop, whiteKnight, whiteQueen, whiteRook] : [blackBishop, blackKnight, blackQueen, blackRook];
 
   return (
-    <div className="change-pawn-container" onClick={(e: React.MouseEvent<HTMLElement>) => {
+    <div className={styles["change-pawn-container"]} onClick={(e: React.MouseEvent<HTMLElement>) => {
         const target = e.target as HTMLImageElement;
         if(!target) return;
         const color = promotedPawn.figure?.color || Colors.WHITE;
@@ -51,9 +52,9 @@ const ChangePawn: FC<ChangePawnProps> = ({color, promotedPawn, board, handleClic
         }
         handleClick();
     }}>
-        <div className="change-pawn-list">
+        <div className={styles["change-pawn-list"]}>
             {figures.map(figure => 
-                <img src={figure} alt="" className="change-pawn-figure" key={figure}/>
+                <img src={figure} alt="figure" key={figure}/>
             )}
         </div>
     </div>
