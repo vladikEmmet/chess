@@ -69,6 +69,7 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
     const nominateWinnerByMate = (color: Colors) => createPopup("wins", color, "By mate");
     const nominateWinnerByTimeout = (color: Colors) => createPopup("wins", color, "By timeout");
     const nominateDrawByStaleMate = () => createPopup("Draw", null, "By stalemate");
+    const nominateDrawByTimeout = () => createPopup("Draw", null, "Time is up, but not enough pieces to checkmate");
     
     const startTimer = useCallback(() => setIsTimerStarted(true), []);
     
@@ -100,7 +101,9 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
           lostWhiteFigures={board.lostWhiteFigures}
           lostBlackFigures={board.lostBlackFigures}
           isTimerStarted={isTimerStarted}
-          nominateWinnerByTimeout={nominateWinnerByTimeout} />
+          nominateWinnerByTimeout={nominateWinnerByTimeout} 
+          nominateDrawByTimeout={nominateDrawByTimeout}
+        />
         <BoardComponent
           isPuzzle={false}
           board={board}

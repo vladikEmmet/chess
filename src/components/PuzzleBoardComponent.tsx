@@ -167,8 +167,9 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
                 />
             )}
             </React.Fragment>
-        )}
+          )}
       </div>
+      <h4 className="puzzle-api-info">Thanks <a href="https://www.chess.com/">chess.com</a> for their API</h4>
     </div>
     )
 }

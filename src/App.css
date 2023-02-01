@@ -185,3 +185,10 @@ body {
   text-align: center;
   color: #f0e869;
 }
+
+.puzzle-api-info,
+.puzzle-api-info a {
+  color: #f0e869;
+  text-align: center;
+  margin-top: 10px;
+}

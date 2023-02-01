@@ -78,7 +78,7 @@ export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, 
               />
             )}
           </React.Fragment>
-      )}
+        )}
       </div>
     </div>
   )

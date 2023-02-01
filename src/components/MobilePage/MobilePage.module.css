@@ -1,0 +1,23 @@
+.mobile {
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100%;
+  background: #110600;
+  color: #f0e869;
+  padding: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.systems {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.systems svg {
+  fill: #f0e869;
+}

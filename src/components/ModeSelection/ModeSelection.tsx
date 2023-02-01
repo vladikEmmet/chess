@@ -13,8 +13,6 @@ interface ModeSelectionProps {
 
 const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, time, mode}) => {
 
-  useEffect(() => console.log("render app"));
-
   useEffect(() => {
     document.title = "Chess"
   }, []);

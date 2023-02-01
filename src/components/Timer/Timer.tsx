@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { Colors } from '../../models/Colors';
-import { Figure } from '../../models/figures/Figure';
+import { Figure, FigureNames } from '../../models/figures/Figure';
 import { Player } from '../../models/Player';
 import styles from "./Timer.module.css";
 
@@ -14,9 +14,14 @@ interface TimerProps {
     lostWhiteFigures: Figure[];
     lostBlackFigures: Figure[];
     nominateWinnerByTimeout: (color: Colors) => void;
+    nominateDrawByTimeout: () => void;
 }
 
-const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout, blackTime, whiteTime, isTimerStarted, lostWhiteFigures, lostBlackFigures}) => {
+interface ITakenFigures {
+    [index: string]: number;
+}
+
+const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout, nominateDrawByTimeout, blackTime, whiteTime, isTimerStarted, lostWhiteFigures, lostBlackFigures}) => {
     const[blackTimer, setBlackTimer] = useState(blackTime);
     const[whiteTimer, setWhiteTimer] = useState(whiteTime);
     const timer = useRef<null | ReturnType<typeof setInterval>>(null);
@@ -34,13 +39,21 @@ const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout,
     useEffect(() => {
         if(whiteTimer <= 0 && timer.current) {
             clearInterval(timer.current);
-            if(lostBlackFigures)
+            if(isDraw(lostBlackFigures)) {
+                nominateDrawByTimeout();
+                return;
+            }
             nominateWinnerByTimeout(Colors.BLACK);
             return;
         }
         if(blackTimer <= 0 && timer.current) {
             clearInterval(timer.current);
+            if(isDraw(lostWhiteFigures)) {
+                nominateDrawByTimeout();
+                return;
+            }
             nominateWinnerByTimeout(Colors.WHITE);
+            return;
         }
     }, [whiteTimer, blackTimer])
 
@@ -55,6 +68,29 @@ const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout,
         }
         const callback = currentPlayer?.color === Colors.WHITE ? decrementWhiteTimer : decrementBlackTimer;
         timer.current = setInterval(callback, 1000);
+    }
+
+    function isDraw(arr: Figure[]) {
+        const takenFigures:ITakenFigures = {};
+
+        for(let i = 0; i < arr.length; i++) {
+            const figure = arr[i];
+            const name = figure.name;
+            if(!takenFigures[name])  {
+                takenFigures[name] = 1;
+            } else takenFigures[name] += 1;
+        }
+
+        console.log(takenFigures);
+
+        if(!takenFigures[FigureNames.PAWN] || takenFigures[FigureNames.PAWN] < 8) return false;
+        if(!takenFigures[FigureNames.QUEEN]) return false;
+        // TODO: Check for queens on the board (in case of capturing a queened pawn)
+        if(!takenFigures[FigureNames.ROOK] || takenFigures[FigureNames.ROOK] <= 1) return false;
+        if((takenFigures[FigureNames.KNIGHT] === 2 && !takenFigures[FigureNames.BISHOP]) 
+                || (takenFigures[FigureNames.BISHOP] === 2 && !takenFigures[FigureNames.KNIGHT])) return false;
+
+        return true;
     }
 
     const handleRestart = () => {
