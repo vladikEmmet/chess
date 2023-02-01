@@ -1,0 +1,14 @@
+.history-container {
+  height: 80vh;
+  width: 160px;
+  border: 1px solid #f0e869;
+  overflow-y: auto;
+}
+
+.history {
+  height: 100%;
+  margin: 0 auto;
+  width: 120px;
+  text-align: center;
+  color: #f0e869;
+}

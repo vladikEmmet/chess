@@ -79,3 +79,46 @@
   margin-top: 15px;
   color: #f0e869;
 }
+
+.play-with-computer-beta-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.play-with-computer-beta-link svg {
+  text-align: center;
+  font-size: 14px;
+  margin-left: 10px;
+  margin-top: 17px;
+  overflow: hidden;
+}
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip::before {
+  display: block;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  margin-left: -100px;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.8em;
+  width: 200px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
+  content: attr(data-tooltip);
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s;
+}
+
+.tooltip:hover::before {
+  opacity: 1;
+  visibility: visible;
+}

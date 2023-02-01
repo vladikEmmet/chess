@@ -27,6 +27,10 @@ const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout,
         }
     }, [currentPlayer])
 
+    const decrementBlackTimer = () => setBlackTimer(prev => prev - 1);
+
+    const decrementWhiteTimer = () => setWhiteTimer(prev => prev - 1);
+
     useEffect(() => {
         if(whiteTimer <= 0 && timer.current) {
             clearInterval(timer.current);
@@ -51,14 +55,6 @@ const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout,
         }
         const callback = currentPlayer?.color === Colors.WHITE ? decrementWhiteTimer : decrementBlackTimer;
         timer.current = setInterval(callback, 1000);
-    }
-
-    function decrementBlackTimer() {
-        setBlackTimer(prev => prev - 1)
-    }
-
-    function decrementWhiteTimer() {
-        setWhiteTimer(prev => prev - 1)
     }
 
     const handleRestart = () => {

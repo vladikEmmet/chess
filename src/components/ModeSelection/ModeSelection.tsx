@@ -1,6 +1,8 @@
 import {FC, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import styles from "./ModeSelection.module.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 interface ModeSelectionProps {
     setTimer: (time: number) => void;
@@ -10,6 +12,8 @@ interface ModeSelectionProps {
 }
 
 const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, time, mode}) => {
+
+  useEffect(() => console.log("render app"));
 
   useEffect(() => {
     document.title = "Chess"
@@ -28,7 +32,7 @@ const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, time, mode}) 
                 <h2>Mode: {mode === null ? "none" : mode}</h2>
             </div>
             <hr />
-            <div className="mode-selection-timer-settings mode-settings">
+            <div className={[styles["mode-selection-timer-settings"], styles["mode-settings"]].join(' ')}>
                 <h2>Time</h2>
                 <button onClick={() => setTimer(60)}>1 minute</button>
                 <button onClick={() => setTimer(300)}>5 minutes</button>
@@ -42,7 +46,12 @@ const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, time, mode}) 
             <Link to="singleplayer" className={styles["mode-selection-play-game-btn"]}>Play</Link>
             <div className={styles["another-models-links"]}>
                 <Link className={styles["puzzle-link"]} to="puzzle">Random Puzzle</Link>
-                <Link className={styles["computer-link"]} to="game-with-computer">Play with computer</Link>
+                <div className={styles["play-with-computer-beta-link"]}>
+                    <Link className={styles["computer-link"]} to="game-with-computer">Play with computer</Link>
+                    <span className={styles.tooltip} data-tooltip="Test feature. A simplified version of the board is used here to facilitate interaction with the UCI">
+                        <FontAwesomeIcon icon={faCircleInfo}/>
+                    </span>
+                </div>
             </div>
         </div>
       </div>

@@ -73,7 +73,7 @@ const Puzzle = () => {
             {
                 fen.length === 0 
                     ?
-                    <h1 style={{color: "orange", textAlign: "center"}}>Loading...</h1>
+                    <h1 style={{color: "orange", textAlign: "center"}}>I am loading puzzle...</h1>
                     :
                     <PuzzleBoardComponent 
                         pgnArr={pgnArr} 
