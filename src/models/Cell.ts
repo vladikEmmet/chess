@@ -218,7 +218,9 @@ export class Cell {
         this.figure.cell = this;
     }
     
-    addLostFigure(figure: Figure) {
+    addLostFigure(figure: Figure | null) {
+        console.log(figure);
+        if(!figure) return;
         figure.color === Colors.BLACK
             ? this.board.lostBlackFigures.push(figure)
             : this.board.lostWhiteFigures.push(figure)

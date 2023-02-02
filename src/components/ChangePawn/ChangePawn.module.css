@@ -1,5 +1,6 @@
 .change-pawn-container {
-  z-index: 3;
+  border-radius: 5px;
+  z-index: 333;
   display: flex;
   justify-content: space-around;
   position: absolute;

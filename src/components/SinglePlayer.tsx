@@ -29,17 +29,10 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
     const [isBoardRotated, setIsBoardRotated] = useState(false);
     
     useEffect(() => {
-        document.title = mode === "classic" ? "Classic chess" : "Chess 960"
-    }, [])
-  
-    useEffect(() => {
         restart(mode);
+        document.title = mode === "classic" ? "Classic chess" : "Chess 960";
     }, [])
     
-    useEffect(() => {
-      console.log('render');
-    })
-  
     function restart(mode: string | null) {
       const newBoard = new Board();
       newBoard.initCells()
@@ -53,6 +46,7 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
           break;
       }
       setBoard(newBoard)
+      setPromotedPawn(null);
       setCurrentPlayer(whitePlayer)
       setGameResult({result: "", winner: null, reason: ""})
     }
@@ -121,7 +115,7 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
         <LostFigures figures={board.lostBlackFigures} addValue={addBlackPlayerValue} diff={whiteValue < blackValue ? blackValue - whiteValue : 0} />
         <GameOverPopUp visibility={gameResult.result.length !== 0} info={gameResult} />
         {promotedPawn && <ChangePawn color={promotedPawn?.figure?.color} promotedPawn={promotedPawn} board={board} handleClick={promotePawn} />}
-        <div className={["curtain", gameResult.result.length !== 0 ? "active" : ""].join(' ')}></div>
+        <div className={["curtain", gameResult.result.length !== 0 || promotedPawn ? "active" : ""].join(' ')}></div>
       </div>
     )
 }

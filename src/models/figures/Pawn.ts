@@ -33,13 +33,17 @@ export class Pawn extends Figure {
             }
 
         if(target.y === this.cell.y + dir && target.x === this.cell.x + 1
+            && this.cell.board.getCell(target.x, target.y).isEmpty()
             && this.cell.board.getCell(this.cell.x + 1, this.cell.y).figure?.name === FigureNames.PAWN
+            && this.cell.board.getCell(this.cell.x + 1, this.cell.y).figure?.color !== this.color
             && this.cell.board.getCell(this.cell.x + 1, this.cell.y).figure?.canBeTakenOnPass) {
                 return true;
         }
 
         if(target.y === this.cell.y + dir && target.x === this.cell.x - 1
+            && this.cell.board.getCell(target.x, target.y).isEmpty()
             && this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure?.name === FigureNames.PAWN
+            && this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure?.color !== this.color
             && this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure?.canBeTakenOnPass) {
                 return true;
             }
@@ -50,21 +54,28 @@ export class Pawn extends Figure {
     moveFigure(target: Cell): void {
         const firstStepDir = this.cell.figure?.color === Colors.BLACK ? 2 : -2;
         this.canBeTakenOnPass = (this.cell.y + firstStepDir === target.y && this.isFirstStep);
+
         if(target.x === this.cell.x + 1
+            && this.cell.board.getCell(target.x, target.y).isEmpty()
             && this.cell.board.getCell(this.cell.x + 1, this.cell.y).figure?.name === FigureNames.PAWN
+            && this.cell.board.getCell(this.cell.x + 1, this.cell.y).figure?.color !== this.color
             && this.cell.board.getCell(this.cell.x + 1, this.cell.y).figure?.canBeTakenOnPass) {
-            super.moveFigure(target);
-            this.cell.board.getCell(this.cell.x + 1, this.cell.y).figure = null;
-            return;
+                this.cell.addLostFigure(this.cell.board.getCell(this.cell.x + 1, this.cell.y).figure)
+                this.cell.board.getCell(this.cell.x + 1, this.cell.y).figure = null;
+                super.moveFigure(target);
+                return;
         }
 
         if(target.x === this.cell.x - 1 
+            && this.cell.board.getCell(target.x, target.y).isEmpty()
             && this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure?.name === FigureNames.PAWN
+            && this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure?.color !== this.color
             && this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure?.canBeTakenOnPass) {
-                super.moveFigure(target);
+                this.cell.addLostFigure(this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure)
                 this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure = null;
+                super.moveFigure(target);
+                return;
             }
-            
 
         super.moveFigure(target);
         this.isFirstStep = false;
