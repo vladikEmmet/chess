@@ -25,7 +25,7 @@ const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, time, mode}) 
                 <h4 className={styles["mode-selection-title"]}>Specify the required parameters</h4>
             </div>
             <hr />
-            <div className="selected-settings">
+            <div className={styles["selected-settings"]}>
                 <h2>Time: {`${time} sec`}</h2>
                 <h2>Mode: {mode === null ? "none" : mode}</h2>
             </div>

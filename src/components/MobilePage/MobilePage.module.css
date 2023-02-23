@@ -2,14 +2,20 @@
   box-sizing: border-box;
   height: 100vh;
   width: 100%;
-  background: #110600;
-  color: #f0e869;
+  background: #111c1c;
+  box-shadow: inset -2px 4px 247px 46px rgba(0, 0, 0, 0.58);
+  color: #fff;
   padding: 10px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+}
+
+.mobile h1,
+.mobile h3 {
+  text-shadow: 4px 8px 5px rgba(0, 0, 0, 0.75);
 }
 
 .systems {
@@ -19,5 +25,5 @@
 }
 
 .systems svg {
-  fill: #f0e869;
+  fill: #fff;
 }

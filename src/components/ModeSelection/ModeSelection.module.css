@@ -2,11 +2,13 @@
   width: 100%;
   height: 100%;
   margin: auto;
-  background: #110600;
+  background: #111c1c;
+  box-shadow: inset -2px 4px 247px 46px rgba(0, 0, 0, 0.58);
 }
 
 .mode-selection-titles {
   margin-bottom: 40px;
+  text-shadow: 4px 8px 5px rgba(0, 0, 0, 0.75);
 }
 
 .selected-settings {
@@ -15,6 +17,7 @@
 
 .selected-settings h2 {
   letter-spacing: 1px;
+  text-shadow: 4px 8px 5px rgba(0, 0, 0, 0.75);
 }
 
 .selected-settings h2:first-child {
