@@ -1,7 +1,9 @@
 .history-container {
-  height: 80vh;
+  height: 512px;
   width: 160px;
-  border: 1px solid #f0e869;
+  border: 3px solid #2d4f4f;
+  background: #274343;
+  box-shadow: inset 0px 4px 60px 23px rgba(5, 2, 2, 0.6);
   overflow-y: auto;
 }
 
@@ -10,5 +12,5 @@
   margin: 0 auto;
   width: 120px;
   text-align: center;
-  color: #f0e869;
+  color: #fff;
 }

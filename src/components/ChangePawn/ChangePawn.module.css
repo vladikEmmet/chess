@@ -1,4 +1,4 @@
-.change-pawn-container {
+/* .change-pawn-container {
   border-radius: 5px;
   z-index: 333;
   display: flex;
@@ -10,10 +10,30 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background: #9a5323;
+} */
+
+.change-pawn-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  width: 30%;
+  transform: translate(-50%, -50%);
+  background: #111c1c;
+  text-align: center;
+  border-radius: 7px;
+  padding: 35px 0;
+  z-index: 333;
+  color: #fff;
+  box-shadow: inset 0px 0px 3px 5px rgba(0, 0, 0, 0.5),
+    inset 1px 0px 0px 11px #1e8b81, inset 20px 20px 61px -3px rgba(0, 0, 0, 0.5),
+    9px 8px 14px 11px rgba(0, 0, 0, 0.5);
 }
 
 .change-pawn-list {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
   width: 50%;
   margin-left: auto;
   margin-right: auto;

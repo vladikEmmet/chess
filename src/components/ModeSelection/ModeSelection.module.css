@@ -24,7 +24,7 @@
 .mode-selection-settings {
   width: 100%;
   text-align: center;
-  color: #f0e869;
+  color: #fff;
   position: absolute;
   top: 50%;
   transform: translate(0%, -50%);
@@ -32,8 +32,8 @@
 
 .mode-selection-settings hr {
   margin: 10px;
-  color: #796236;
-  background-color: #796236;
+  background: #fff;
+  color: #fff;
   border: 0px none;
   height: 1px;
 }
@@ -49,13 +49,15 @@
 .mode-selection-settings button,
 .mode-selection-play-game-btn {
   margin: 0 10px;
-  background: #412c01;
+  background: linear-gradient(120deg, #008080, #214343);
+  box-shadow: inset 2px 4px 3px 0px #67d4ad,
+    inset -6px -6px 5px 0px rgba(0, 0, 0, 0.25);
   border: none;
   border-radius: 2px;
   width: 10%;
   height: 30px;
   cursor: pointer;
-  color: #f0e869;
+  color: #fff;
 }
 
 .mode-selection-mode-settings {
@@ -77,7 +79,7 @@
 .another-models-links a {
   display: block;
   margin-top: 15px;
-  color: #f0e869;
+  color: #fff;
 }
 
 .play-with-computer-beta-link {

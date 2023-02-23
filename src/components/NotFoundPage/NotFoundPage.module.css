@@ -4,10 +4,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #110600;
+  background: #111c1c;
+  box-shadow: inset -2px 4px 247px 46px rgba(0, 0, 0, 0.58);
   font-size: 24px;
   font-weight: bold;
-  color: #f0e869;
+  color: #fff;
 }
 
 .not-found-page-container span {

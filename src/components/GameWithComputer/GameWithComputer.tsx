@@ -115,7 +115,15 @@ const GameWithComputer: React.FC<{
         </Button>
       </div>
       <div className={styles.chessboard}>
-        <Chessboard position={fen} allowDrag={onDragStart} onDrop={onMovePiece} />
+        <Chessboard position={fen}
+          allowDrag={onDragStart} 
+          onDrop={onMovePiece} 
+          showNotation={false}
+          width={512} 
+          darkSquareStyle={{background: "linear-gradient(170deg, #008080, #214343)", boxShadow: "inset 2px 4px 3px 0px #67d4ad, inset -6px -6px 5px 0px rgba(0, 0, 0, 0.25)"}}
+          lightSquareStyle={{background: "linear-gradient(170deg, #b5c39e, #619985)", boxShadow: "inset 4px 4px 5px 0px #dfd9ba, inset -8px -6px 5px 0px rgba(0, 0, 0, 0.25)"}}
+          dropSquareStyle={{ boxShadow: 'inset 0 0 1px 4px blue' }}
+        />
       </div>
       <History history={history} />
     </div>

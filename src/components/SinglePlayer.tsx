@@ -59,7 +59,10 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
     const swapPlayers = () => setCurrentPlayer(currentPlayer?.color === Colors.WHITE ? blackPlayer : whitePlayer)
   
     
-    const createPopup = (result: string, winner: string | null, reason: string) => setGameResult({result: result, winner: winner, reason: reason});
+    const createPopup = (result: string, winner: string | null, reason: string) => {
+      setGameResult({result: result, winner: winner, reason: reason})
+      setIsTimerStarted(false);
+    };
     const nominateWinnerByMate = (color: Colors) => createPopup("wins", color, "By mate");
     const nominateWinnerByTimeout = (color: Colors) => createPopup("wins", color, "By timeout");
     const nominateDrawByStaleMate = () => createPopup("Draw", null, "By stalemate");
