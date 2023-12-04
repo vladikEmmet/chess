@@ -1,6 +1,4 @@
 import styles from "./MobilePage.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 
 const MobilePage = () => {
   return (

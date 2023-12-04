@@ -3,6 +3,7 @@ import { Colors } from '../../models/Colors';
 import { Figure, FigureNames } from '../../models/figures/Figure';
 import { Player } from '../../models/Player';
 import styles from "./Timer.module.css";
+import { parseTime } from '../../utils/parseTime';
 
 interface TimerProps {
     currentPlayer: Player | null;
@@ -24,7 +25,18 @@ interface ITakenFigures {
 const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout, nominateDrawByTimeout, blackTime, whiteTime, isTimerStarted, lostWhiteFigures, lostBlackFigures}) => {
     const[blackTimer, setBlackTimer] = useState(blackTime);
     const[whiteTimer, setWhiteTimer] = useState(whiteTime);
+    const [whiteTimeDisplayed, setWhiteTimeDisplayed] = useState(parseTime(whiteTime));
+    const [blackTimeDisplayed, setBlackTimeDisplayed] = useState(parseTime(blackTime));
     const timer = useRef<null | ReturnType<typeof setInterval>>(null);
+    
+    useEffect(() => {
+        const black = parseTime(blackTimer);
+        const white = parseTime(whiteTimer);
+
+        setWhiteTimeDisplayed(white);
+        setBlackTimeDisplayed(black);
+    }, [blackTimer, whiteTimer])
+
 
     useEffect(() => {
         if(isTimerStarted) {
@@ -101,11 +113,11 @@ const Timer: FC<TimerProps> = ({currentPlayer, restart, nominateWinnerByTimeout,
 
   return (
     <div className={styles.timer}>
-        <h2>{blackTimer}</h2>
+        <h2>{blackTimeDisplayed}</h2>
         <div>
             <button onClick={handleRestart}>Restart</button>
         </div>
-        <h2>{whiteTimer}</h2>
+        <h2>{whiteTimeDisplayed}</h2>
     </div>
   )
 }

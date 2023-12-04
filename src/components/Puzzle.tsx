@@ -34,15 +34,18 @@ const Puzzle = () => {
         .then(res => {
             const pgn = res.pgn.replaceAll(/\*|#/g, '').split(' ');
             setPlayersColor(pgn[pgn.length - 1].split(' ').length > 1 ? Colors.BLACK : Colors.WHITE);
-            return res
-        })
-        .then(res => {
             const fen = FenAndPgnMethods.convertFenToArray(res.fen);
             setFen(fen);
-            return fen
+            newBoard.createStartPosition(fen);
+            setBoard(newBoard);
         })
-        .then(fen => newBoard.createStartPosition(fen))
-        .then(res => setBoard(newBoard))
+        // .then(res => {
+        //     const fen = FenAndPgnMethods.convertFenToArray(res.fen);
+        //     setFen(fen);
+        //     return fen
+        // })
+        // .then(fen => newBoard.createStartPosition(fen))
+        // .then(res => setBoard(newBoard))
     }, [])
 
     function restart() {
