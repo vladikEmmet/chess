@@ -163,7 +163,7 @@ export class Cell {
         return true;
     }
 
-    isEmptyVerical(target: Cell): boolean {
+    isEmptyVertical(target: Cell): boolean {
         if(this.x !== target.x) {
             return false;
         }
@@ -251,6 +251,7 @@ export class Cell {
             this.figure.isFirstStep = false;
             target.setFigure(this.figure);
             this.figure = null;
+
         }
     }
 

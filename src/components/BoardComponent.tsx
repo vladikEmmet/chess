@@ -21,14 +21,14 @@ interface BoardProps {
 
 
 export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, isRotated, startTimer, nominateWinnerByMate,  nominateDrawByStaleMate, indicatePromotedPawn, swapPlayers}) => {
-  const [selectedCell, setSelectedCell] = useState<Cell | null>(null); 
+  const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
   const curColor = currentPlayer?.color ? currentPlayer?.color.slice(0, 1).toUpperCase() + currentPlayer?.color.slice(1) : ""
 
   const highLightCells = () => {
     board.highLightCells(selectedCell)
     updateBoard()
   };
-  
+
   const handleClick = (cell: Cell) => {
     if(selectedCell && selectedCell !== cell && selectedCell.figure?.canMove(cell)) {
       selectedCell.moveFigure(cell);
@@ -53,21 +53,21 @@ export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, 
       }
     }
   }
-  
+
   useEffect(() => {
-    highLightCells()
+    highLightCells();
   }, [selectedCell])
 
   function updateBoard() {
     const newBoard = board.copyBoard();
     setBoard(newBoard)
   }
-  
+
   return (
     <div className="board-container">
       <h3>{curColor} to move</h3>
       <div className={["board", isRotated ? "rotated" : ""].join(' ')}>
-        {board.cells.map((row, index) => 
+        {board.cells.map((row, index) =>
           <React.Fragment key={index}>
             {row.map(cell =>
               <CellComponent

@@ -165,10 +165,10 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
             <React.Fragment key={index}>
             {row.map(cell =>
                 <CellComponent
-                handleClick={handleClick}
-                cell={cell}
-                key={cell.id}
-                selected={cell.x === selectedCell?.x && cell.y === selectedCell?.y}
+                    handleClick={handleClick}
+                    cell={cell}
+                    key={cell.id}
+                    selected={cell.x === selectedCell?.x && cell.y === selectedCell?.y}
                 />
             )}
             </React.Fragment>
@@ -180,3 +180,4 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
 }
 
 export default PuzzleBoardComponent;
+

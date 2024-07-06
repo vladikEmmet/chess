@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
 import styles from './DecidedPuzzle.module.css'
+import usePlaySound from "../../../hooks/usePlaySound";
 
 const DecidedPuzzle = () => {
+    usePlaySound();
+
   return (
     <div className="puzzle-popup">
         <h1>Decided!</h1>
