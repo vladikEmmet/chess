@@ -47,11 +47,11 @@ export class Pawn extends Figure {
             && this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure?.canBeTakenOnPass) {
                 return true;
             }
-        
+
         return false;
     }
 
-    moveFigure(target: Cell): void {
+    moveFigure(target: Cell): void | string {
         const firstStepDir = this.cell.figure?.color === Colors.BLACK ? 2 : -2;
         this.canBeTakenOnPass = (this.cell.y + firstStepDir === target.y && this.isFirstStep);
 
@@ -66,7 +66,7 @@ export class Pawn extends Figure {
                 return;
         }
 
-        if(target.x === this.cell.x - 1 
+        if(target.x === this.cell.x - 1
             && this.cell.board.getCell(target.x, target.y).isEmpty()
             && this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure?.name === FigureNames.PAWN
             && this.cell.board.getCell(this.cell.x - 1, this.cell.y).figure?.color !== this.color

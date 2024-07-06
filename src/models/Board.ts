@@ -89,9 +89,8 @@ export class Board {
             for(let col = 0; col < 8; col++) {
                 const cell = this.getCell(col, row);
                 if(cell.figure && cell.figure.name === figureName && cell.figure.color !== color && cell.figure.canMove(target)) {
-                    cell.moveFigure(target);
-                    return;
-                }                
+                    return cell.moveFigure(target);
+                }
             }
         }
     }
@@ -101,10 +100,10 @@ export class Board {
             const cell = this.getCell(column, row);
             if(cell.figure && cell.figure.color === color && cell.figure.canMove(target)) {
                 cell.moveFigure(target);
-            } 
+            }
         }
     }
-    
+
     public copyBoard(): Board {
         const newBoard = new Board();
         newBoard.cells = this.cells;
@@ -137,11 +136,11 @@ export class Board {
 
         return true;
     }
-    
+
     public getCell(x: number, y: number) {
         return this.cells[y][x];
     }
-    
+
     private addPawns() {
         for(let i = 0; i < 8; i++) {
             new Pawn(Colors.BLACK, this.getCell(i, 1), true)
@@ -195,7 +194,7 @@ export class Board {
     public changePawnToBishop(color: Colors, cell: Cell) {
         new Bishop(color, cell);
     }
-    
+
     public addFigures() {
         this.addPawns()
         this.addKings()
@@ -235,7 +234,7 @@ export class Board {
             }
         }
     }
-    
+
     private addBishopsFisher() {
         let i = 0;
         while(i < 2) {
@@ -257,7 +256,7 @@ export class Board {
             }
         }
     }
-    
+
     public addFisherFigures() {
         this.addKingsFisher();
         this.addRooksFisher();

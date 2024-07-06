@@ -6,7 +6,7 @@ import whiteLogo from '../../assets/white-king.png';
 
 export class King extends Figure {
 
-      
+
     constructor(color: Colors, cell: Cell, isFirstStep: boolean) {
         super(color, cell);
         this.logo = color === Colors.BLACK ? blackLogo : whiteLogo;
@@ -17,7 +17,7 @@ export class King extends Figure {
     canMove(target: Cell): boolean {
         if(!super.canMove(target)) return false;
         if(this.cell.isCellUnderAttack(target, this.color)) return false;
-        if((target.x === this.cell.x) 
+        if((target.x === this.cell.x)
             && (target.y === this.cell.y + 1 || target.y === this.cell.y - 1)) {
                 return true;
         }
@@ -32,7 +32,7 @@ export class King extends Figure {
 
         const shortRookCell = this.cell.board.getCell(this.cell.x + 3, this.cell.y);
 
-        if(target.y === this.cell.y 
+        if(target.y === this.cell.y
             && target.x === this.cell.x + 2
             && !this.cell.isCellUnderAttack(target, this.color)
             && !this.cell.isCellUnderAttack(this.cell.board.getCell(target.x - 1, target.y), this.color)
@@ -41,7 +41,7 @@ export class King extends Figure {
             && shortRookCell?.figure?.name === FigureNames.ROOK
             && shortRookCell?.figure?.isFirstStep
             && this.isFirstStep) {
-                
+
                 return true;
         }
 
@@ -56,21 +56,22 @@ export class King extends Figure {
                 && longRookCell?.figure?.name === FigureNames.ROOK
                 && longRookCell?.figure?.isFirstStep
                 && this.isFirstStep) {
-                    
+
                     return true;
             }
 
         return false;
     }
 
-    moveFigure(target: Cell): void {
+    moveFigure(target: Cell): void | string {
         if(target.x === this.cell.x - 2 && target.y === this.cell.y) {
             super.moveFigure(target);
             const longRook = this.cell.board.getCell(this.cell.x - 4, this.cell.y);
             const newRookPos = this.cell.board.getCell(this.cell.x - 1, this.cell.y);
             longRook.longCastling(newRookPos);
             this.isFirstStep = false;
-            return;
+
+            return 'castling';
         }
 
         if(target.x === this.cell.x + 2 && target.y === this.cell.y) {
@@ -79,11 +80,12 @@ export class King extends Figure {
             const newRookPos = this.cell.board.getCell(this.cell.x + 1, this.cell.y);
             shortRook.shortCastling(newRookPos);
             this.isFirstStep = false;
-            return;
+
+            return 'castling';
         }
-        
+
         super.moveFigure(target);
         this.isFirstStep = false;
     }
-    
+
 }

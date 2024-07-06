@@ -21,7 +21,7 @@ export class Rook extends Figure {
         return false;
     }
 
-    moveFigure(target: Cell): void {
+    moveFigure(target: Cell): void | string {
         super.moveFigure(target)
         this.isFirstStep = false;
     }

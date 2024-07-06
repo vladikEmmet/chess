@@ -46,8 +46,8 @@ export class Figure {
         if(this.cell.board.name === "originalBoard" && !this.cell.isSaveMove(this.cell, target)) return false
         return true;
     }
-    
-    moveFigure(target: Cell) {
-        
+
+    moveFigure(target: Cell): string | void {
+
     }
 }

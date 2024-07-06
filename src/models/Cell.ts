@@ -225,25 +225,34 @@ export class Cell {
             : this.board.lostWhiteFigures.push(figure)
     }
 
-    moveFigure(target: Cell) {
+    moveFigure(target: Cell): void | string {
+        let movingType;
         const color = this.figure?.color;
         if(this.figure && this.figure?.canMove(target)) {
-            this.figure.moveFigure(target)
+            movingType = this.figure.moveFigure(target)
             if(target.figure) {
                 this.addLostFigure(target.figure);
+                movingType = 'capturing';
             }
             target.setFigure(this.figure);
             this.figure = null;
         }
 
         if(color === Colors.WHITE) {
-            this.board.isBlackKingUnderAttack = this.isKingUnderAttack(Colors.BLACK);
+            const isBlackKingUnderAttack = this.isKingUnderAttack(Colors.BLACK);
+            this.board.isBlackKingUnderAttack = isBlackKingUnderAttack;
+            if(isBlackKingUnderAttack) movingType = 'check';
             this.board.winner = this.isMate(Colors.BLACK) ? "Black" : null;
         }
         if(color === Colors.BLACK) {
-            this.board.isWhiteKingUnderAttack = this.isKingUnderAttack(Colors.WHITE);
+            const isWhiteKingUnderAttack = this.isKingUnderAttack(Colors.WHITE);
+            this.board.isWhiteKingUnderAttack = isWhiteKingUnderAttack;
+            if(isWhiteKingUnderAttack) movingType = 'check';
             this.board.winner = this.isMate(Colors.WHITE) ? "White" : null;
         }
+
+        console.log(movingType);
+        return movingType;
     }
 
     longCastling(target: Cell) {
@@ -252,6 +261,7 @@ export class Cell {
             target.setFigure(this.figure);
             this.figure = null;
 
+            return;
         }
     }
 
@@ -260,6 +270,8 @@ export class Cell {
             this.figure.isFirstStep = false;
             target.setFigure(this.figure);
             this.figure = null;
+
+            return;
         }
     }
 }

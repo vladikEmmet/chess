@@ -1,9 +1,13 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useEffect, useRef, useState} from 'react'
 import { Board } from '../models/Board';
 import { Cell } from '../models/Cell';
 import { Colors } from '../models/Colors';
 import { FigureNames } from '../models/figures/Figure';
 import { CellComponent } from './CellComponent';
+import castlingSound from "../assets/sounds/castle.mp3";
+import capturingSound from "../assets/sounds/capture.mp3";
+import movingSound from "../assets/sounds/move-self.mp3";
+import checkSound from "../assets/sounds/move-check.mp3";
 
 interface PuzzleBoardComponentProps {
     board: Board;
@@ -31,7 +35,11 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
       "N": FigureNames.KNIGHT,
       "B": FigureNames.BISHOP,
       "P": FigureNames.PAWN,
-    })
+    });
+    const castlingAudio = useRef(new Audio(castlingSound));
+    const captureAudio = useRef(new Audio(capturingSound));
+    const movingAudio = useRef(new Audio(movingSound));
+    const checkAudio = useRef(new Audio(checkSound));
 
     const highLightCells = () => {
       board.highLightCells(selectedCell);
@@ -41,7 +49,20 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
     function handleClick(cell: Cell) {
         try {
             if (selectedCell && selectedCell !== cell && selectedCell.figure?.canMove(cell)) {
-                selectedCell.moveFigure(cell);
+                const movingType = selectedCell.moveFigure(cell);
+                switch(movingType) {
+                    case 'check':
+                        checkAudio.current.play();
+                        break;
+                    case "castling":
+                        castlingAudio.current.play();
+                        break;
+                    case "capturing":
+                        captureAudio.current.play();
+                        break;
+                    default:
+                        movingAudio.current.play();
+                }
                 if (cell.figure?.name === FigureNames.PAWN && ((cell.y === 0 && cell.figure.color === Colors.WHITE) || (cell.y === 7 && cell.figure.color === Colors.BLACK))) {
                     indicatePromotedPawn(cell);
                 }
@@ -60,7 +81,7 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
                 setTimeout(() => {
                     makeComputerMove(playersColor || Colors.WHITE);
                     removePgnElement();
-                }, 500);
+                }, 800);
 
 
             } else {
@@ -92,7 +113,20 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
 
       const cell = board.getCell(columns.indexOf(x), 8 - +y);
       board.makeComputerMove(figureName, cell, color);
-
+        const movingType = board.makeComputerMove(figureName, cell, color);
+        switch(movingType) {
+            case 'check':
+                checkAudio.current.play();
+                break;
+            case "castling":
+                castlingAudio.current.play();
+                break;
+            case "capturing":
+                captureAudio.current.play();
+                break;
+            default:
+                movingAudio.current.play();
+        }
       function movePawn() {
         const col = columns.indexOf(move[0]);
         const row = move.includes('x') ? +move[move.indexOf('x') + 2] : +move[1];
