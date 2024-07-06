@@ -26,7 +26,7 @@ const ModeSelection: FC<ModeSelectionProps> = ({setTimer, setMode, time, mode}) 
             </div>
             <hr />
             <div className={styles["selected-settings"]}>
-                <h2>Time: {`${time} sec`}</h2>
+                <h2>Time: {`${time/60} min`}</h2>
                 <h2>Mode: {mode === null ? "none" : mode}</h2>
             </div>
             <hr />

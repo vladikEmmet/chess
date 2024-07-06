@@ -2,7 +2,7 @@ import React, {FC} from 'react'
 import { Link } from 'react-router-dom';
 
 export interface IGameInfo {
-    result: string;
+    result: string
     winner: string | null;
     reason: string;
 }

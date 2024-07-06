@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 import Loader from './components/loader/Loader';
-import MobilePage from './components/MobilePage/MobilePage';
+import MobilePage from './screens/MobilePage/MobilePage';
 import  * as serviceWorker from "./serviceWorker";
 
 const root = ReactDOM.createRoot(
@@ -13,9 +13,9 @@ const root = ReactDOM.createRoot(
 const isMobile = /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator.userAgent);
 
 root.render(
-  isMobile ? 
+  isMobile ?
   <MobilePage /> :
-  
+
   <StrictMode>
     <BrowserRouter>
       <Suspense fallback={<Loader />}>

@@ -52,6 +52,7 @@ body {
   width: 64px;
   height: 64px;
   position: relative;
+  transition: 1s all ease;
 }
 
 .black {

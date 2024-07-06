@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, useCallback } from 'react';
 import { BoardComponent } from './BoardComponent';
 import ChangePawn from './ChangePawn/ChangePawn';
-import GameOverPopUp, { IGameInfo } from './GameOverPopUp';
+import GameOverPopUp, { IGameInfo } from './popups/GameOverPopUp';
 import LostFigures from './LostFigures/LostFigures';
 import RotateBoardButton from './rotateBoardButton/RotateBoardButton';
 import Timer from './Timer/Timer';
@@ -27,12 +27,12 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
     const [blackValue, setBlackValue] = useState<number>(0);
     const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
     const [isBoardRotated, setIsBoardRotated] = useState(false);
-    
+
     useEffect(() => {
         restart(mode);
         document.title = mode === "classic" ? "Classic chess" : "Chess 960";
     }, [])
-    
+
     function restart(mode: string | null) {
       const newBoard = new Board();
       newBoard.initCells()
@@ -50,15 +50,15 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
       setCurrentPlayer(whitePlayer)
       setGameResult({result: "", winner: null, reason: ""})
     }
-  
+
     const restartTimer = () => restart(mode);
-  
+
     const addWhitePlayerValue = (value: number) => setWhiteValue(value);
     const addBlackPlayerValue = (value: number) => setBlackValue(value);
-  
+
     const swapPlayers = () => setCurrentPlayer(currentPlayer?.color === Colors.WHITE ? blackPlayer : whitePlayer)
-  
-    
+
+
     const createPopup = (result: string, winner: string | null, reason: string) => {
       setGameResult({result: result, winner: winner, reason: reason})
       setIsTimerStarted(false);
@@ -67,40 +67,40 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
     const nominateWinnerByTimeout = (color: Colors) => createPopup("wins", color, "By timeout");
     const nominateDrawByStaleMate = () => createPopup("Draw", null, "By stalemate");
     const nominateDrawByTimeout = () => createPopup("Draw", null, "Time is up, but not enough pieces to checkmate");
-    
+
     const startTimer = useCallback(() => setIsTimerStarted(true), []);
-    
+
     const promotePawn = () => {
       if(!promotedPawn || !promotedPawn.figure) return;
       const enemyColor = promotedPawn.figure.color === Colors.WHITE ? Colors.BLACK : Colors.WHITE;
-  
+
       if(board.getCell(promotedPawn.x, promotedPawn.y).isMate(enemyColor)) {
         nominateWinnerByMate(promotedPawn.figure.color);
       }
       setPromotedPawn(null);
     };
-  
+
     const indicatePromotedPawn = (cell: Cell) => setPromotedPawn(cell);
-  
+
     const rotateBoard = () => {
       setIsBoardRotated(prev => !prev);
     }
-  
-    
+
+
     return (
       <div className="app">
-        <Timer
-          restart={restartTimer}
-          mode={mode}
-          currentPlayer={currentPlayer}
-          blackTime={blackTime}
-          whiteTime={whiteTime}
-          lostWhiteFigures={board.lostWhiteFigures}
-          lostBlackFigures={board.lostBlackFigures}
-          isTimerStarted={isTimerStarted}
-          nominateWinnerByTimeout={nominateWinnerByTimeout} 
-          nominateDrawByTimeout={nominateDrawByTimeout}
-        />
+          <Timer
+              restart={restartTimer}
+              mode={mode}
+              currentPlayer={currentPlayer}
+              blackTime={blackTime}
+              whiteTime={whiteTime}
+              lostWhiteFigures={board.lostWhiteFigures}
+              lostBlackFigures={board.lostBlackFigures}
+              isTimerStarted={isTimerStarted}
+              nominateWinnerByTimeout={nominateWinnerByTimeout}
+              nominateDrawByTimeout={nominateDrawByTimeout}
+          />
         <BoardComponent
           isPuzzle={false}
           board={board}
@@ -110,12 +110,12 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
           nominateDrawByStaleMate={nominateDrawByStaleMate}
           currentPlayer={currentPlayer}
           swapPlayers={swapPlayers}
-          indicatePromotedPawn={indicatePromotedPawn} 
+          indicatePromotedPawn={indicatePromotedPawn}
           isRotated={isBoardRotated}
         />
         <RotateBoardButton onClick={rotateBoard}/>
-        <LostFigures figures={board.lostWhiteFigures} addValue={addWhitePlayerValue} diff={whiteValue > blackValue ? whiteValue - blackValue : 0} />
-        <LostFigures figures={board.lostBlackFigures} addValue={addBlackPlayerValue} diff={whiteValue < blackValue ? blackValue - whiteValue : 0} />
+          <LostFigures figures={board.lostWhiteFigures} addValue={addWhitePlayerValue} diff={whiteValue > blackValue ? whiteValue - blackValue : 0} />
+          <LostFigures figures={board.lostBlackFigures} addValue={addBlackPlayerValue} diff={whiteValue < blackValue ? blackValue - whiteValue : 0} />
         <GameOverPopUp visibility={gameResult.result.length !== 0} info={gameResult} />
         {promotedPawn && <ChangePawn color={promotedPawn?.figure?.color} promotedPawn={promotedPawn} board={board} handleClick={promotePawn} />}
         <div className={["curtain", gameResult.result.length !== 0 || promotedPawn ? "active" : ""].join(' ')}></div>

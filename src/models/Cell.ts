@@ -18,7 +18,7 @@ export class Cell {
        this.figure = figure;
        this.board = board;
        this.available = false;
-       this.id = Math.random(); 
+       this.id = Math.random();
     }
 
     isCellUnderAttack(target: Cell, color: Colors): boolean {
@@ -47,13 +47,13 @@ export class Cell {
         }
 
         const tmp = this.findKing(color);
-        
+
         if(!tmp || !tmp.figure) return;
 
         const king = this.board.getCell(tmp.x, tmp.y);
 
         if(!king || !king.figure) return;
-        
+
         const attacker = findAttacker(king);
         if(!attacker || ! attacker.figure) return false;
         if(king.figure.canMove(attacker)) return false;
@@ -68,20 +68,20 @@ export class Cell {
             (this.board.cells[king.y - 1] && this.board.cells[king.y - 1][king.x - 1] && this.board.getCell(king.x - 1, king.y - 1).isEmpty() && !this.isCellUnderAttack(this.board.getCell(king.x - 1, king.y - 1), king.figure.color)))) {
                 return false;
         }
-        
+
         if(attacker?.figure?.name === FigureNames.KNIGHT && !this.isCellUnderAttack(attacker, attacker.figure.color)) {
             return true;
         }
 
         if(attacker.y === king.y) return king.checkHorizontal(attacker);
-        
+
         if(attacker.x === king.x) return king.checkVertical(attacker);
-        
+
         return king.checkDiagonal(attacker);
-        
-        
+
+
     }
-    
+
     findKing(color: Colors): Cell | void {
         for(const row of this.board.cells) {
             for(const cell of row) {
@@ -91,10 +91,10 @@ export class Cell {
             }
         }
     }
-    
+
     isKingUnderAttack(color: Colors): boolean {
         const king = this.findKing(color);
-        
+
         if(king && this.isCellUnderAttack(king, color)) {
             return true;
         }
@@ -109,13 +109,13 @@ export class Cell {
 
         clone.getCell(target.x, target.y).setFigure(cell.figure);
         cell.figure = null;
-    
+
 
         if(kingColor === Colors.WHITE && cell.isKingUnderAttack.call(cell, Colors.WHITE)) return false;
         if(kingColor === Colors.BLACK && cell.isKingUnderAttack.call(cell, Colors.BLACK)) return false;
         return true;
     }
-    
+
     isEmpty(): boolean {
         return this.figure === null;
     }
@@ -137,7 +137,7 @@ export class Cell {
         }
         return true;
     }
-    
+
     checkVertical(target: Cell) {
         const min = Math.min(this.y, target.y);
         const max = Math.max(this.y, target.y);
@@ -162,7 +162,7 @@ export class Cell {
 
         return true;
     }
-    
+
     isEmptyVerical(target: Cell): boolean {
         if(this.x !== target.x) {
             return false;
@@ -178,7 +178,7 @@ export class Cell {
 
         return true;
 
-        
+
     }
 
     isEmptyHorizontal(target: Cell): boolean {
@@ -217,17 +217,16 @@ export class Cell {
         this.figure = figure;
         this.figure.cell = this;
     }
-    
+
     addLostFigure(figure: Figure | null) {
-        console.log(figure);
         if(!figure) return;
         figure.color === Colors.BLACK
             ? this.board.lostBlackFigures.push(figure)
             : this.board.lostWhiteFigures.push(figure)
     }
-    
+
     moveFigure(target: Cell) {
-        const color = this.figure?.color
+        const color = this.figure?.color;
         if(this.figure && this.figure?.canMove(target)) {
             this.figure.moveFigure(target)
             if(target.figure) {

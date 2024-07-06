@@ -1,13 +1,13 @@
-import { useState, useLayoutEffect, useEffect } from 'react';
+import {useState, useLayoutEffect} from 'react';
 import { FenAndPgnMethods } from '../methods/FenAndPgnMethods';
 import { FetchMethods } from '../methods/FetchMethods';
 import { Board } from '../models/Board';
 import { Cell } from '../models/Cell';
 import { Colors } from '../models/Colors';
 import ChangePawn from './ChangePawn/ChangePawn';
-import DecidedPuzzle from './DecidedPuzzle/DecidedPuzzle';
+import DecidedPuzzle from './popups/DecidedPuzzle/DecidedPuzzle';
 import PuzzleBoardComponent from './PuzzleBoardComponent';
-import WarningWindow from './WarningWindow';
+import WarningWindow from './popups/WarningWindow';
 
 const Puzzle = () => {
     const [board, setBoard] = useState(new Board());
@@ -19,33 +19,32 @@ const Puzzle = () => {
     const [startPgnArr, setStartPgnArr] = useState<string[]>([]);
     const [isWrongMove, setIsWrongMove] = useState<boolean>(false);
     const [decidedPuzzleWindow, setDecidedPuzzleWindow] = useState<boolean>(false);
-    
+    const [isLoading, setIsLoading] = useState(false);
+
+
     useLayoutEffect(() => {
         document.title = "Can you solve this puzzle?"
+        setIsLoading(true);
         const newBoard = new Board();
         newBoard.initCells();
-        FetchMethods.fetchDailyPuzzle().then(res => {
-            setInfo(res);
-            const pgn: string[] = res.pgn.split(/\r\n\r\n/)[1].split(/\d\.\s+/g).slice(1).map((i: string) => i.replace(/\r|\n|\*|#/g, ""));
-            setPgnArr(pgn);
-            setStartPgnArr(pgn);
-            return res
-        })
-        .then(res => {
-            const pgn = res.pgn.replaceAll(/\*|#/g, '').split(' ');
-            setPlayersColor(pgn[pgn.length - 1].split(' ').length > 1 ? Colors.BLACK : Colors.WHITE);
-            const fen = FenAndPgnMethods.convertFenToArray(res.fen);
-            setFen(fen);
-            newBoard.createStartPosition(fen);
-            setBoard(newBoard);
-        })
-        // .then(res => {
-        //     const fen = FenAndPgnMethods.convertFenToArray(res.fen);
-        //     setFen(fen);
-        //     return fen
-        // })
-        // .then(fen => newBoard.createStartPosition(fen))
-        // .then(res => setBoard(newBoard))
+        FetchMethods.fetchDailyPuzzle()
+            .then(res => {
+                setInfo(res);
+                const pgnTmp: string[] = res.pgn.split(/\r\n\r\n/)[1].split(/\d\.\s+/g).slice(1).map((i: string) => i.replace(/[\r\n*#]/g, ""));
+                setPgnArr(pgnTmp);
+                setStartPgnArr(pgnTmp);
+                const pgn = res.pgn.replaceAll(/[*#]/g, '').split(' ');
+                setPlayersColor(pgn[pgn.length - 1].split(' ').length > 1 ? Colors.BLACK : Colors.WHITE);
+                const fen = FenAndPgnMethods.convertFenToArray(res.fen);
+                setFen(fen);
+                newBoard.createStartPosition(fen);
+                setBoard(newBoard);
+            })
+            .catch(err => {
+                console.log(err);
+                alert("Something went wrong. Please try again later.");
+            })
+            .finally(() => setIsLoading(false));
     }, [])
 
     function restart() {
@@ -56,7 +55,7 @@ const Puzzle = () => {
         setPgnArr(startPgnArr);
         setIsWrongMove(false);
     }
-    
+
     const indicatePromotedPawn = (cell: Cell | null) => setPromotedPawn(cell);
 
     const showCongrats = () => setDecidedPuzzleWindow(true);
@@ -66,26 +65,24 @@ const Puzzle = () => {
     const createWarningWindow = () => setIsWrongMove(true);
 
     const removePgnElement = () => setPgnArr(pgnArr.slice(1));
-    
+
+    if(isLoading) {
+        return <h1 style={{color: "#fff", textAlign: "center"}}>I am loading puzzle...</h1>
+    }
+
     return (
         <div className="puzzle">
-            {
-                fen.length === 0 
-                    ?
-                    <h1 style={{color: "#fff", textAlign: "center"}}>I am loading puzzle...</h1>
-                    :
-                        <PuzzleBoardComponent 
-                            pgnArr={pgnArr} 
-                            board={board} 
-                            setBoard={setBoard} 
-                            playersColor={playersColor} 
-                            indicatePromotedPawn={indicatePromotedPawn} 
-                            createWarningWindow={createWarningWindow} 
-                            removePgnElement={removePgnElement} 
-                            showCongrats={showCongrats}
-                            title={info.title}
-                        />
-            }
+            <PuzzleBoardComponent
+                pgnArr={pgnArr}
+                board={board}
+                setBoard={setBoard}
+                playersColor={playersColor}
+                indicatePromotedPawn={indicatePromotedPawn}
+                createWarningWindow={createWarningWindow}
+                removePgnElement={removePgnElement}
+                showCongrats={showCongrats}
+                title={info.title}
+            />
             {promotedPawn && <ChangePawn color={promotedPawn.figure?.color} promotedPawn={promotedPawn} board={board} handleClick={promotePawn} />}
             {isWrongMove && <WarningWindow restart={restart}/>}
             {decidedPuzzleWindow && <DecidedPuzzle />}

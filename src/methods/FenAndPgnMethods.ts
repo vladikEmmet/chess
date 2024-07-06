@@ -1,8 +1,8 @@
 const {converters} = require('fen-reader');
+// import {converters} from 'fen-reader';
 
 export class FenAndPgnMethods {
     static convertFenToArray(fen: string) {
-        const arr = converters.fen2array(fen);
-        return arr;
+        return converters.fen2array(fen);
     }
 }

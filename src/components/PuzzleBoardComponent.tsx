@@ -34,41 +34,46 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
     })
 
     const highLightCells = () => {
-      board.highLightCells(selectedCell)
-      updateBoard()
+      board.highLightCells(selectedCell);
+      updateBoard();
     };
 
     function handleClick(cell: Cell) {
-      try {
-        if(selectedCell && selectedCell !== cell && selectedCell.figure?.canMove(cell)) {
-          selectedCell.moveFigure(cell);
-          if(cell.figure?.name === FigureNames.PAWN && ((cell.y === 0 && cell.figure.color === Colors.WHITE) || (cell.y === 7 && cell.figure.color === Colors.BLACK))) {
-            indicatePromotedPawn(cell);
-          }
-          setSelectedCell(null);
+        try {
+            if (selectedCell && selectedCell !== cell && selectedCell.figure?.canMove(cell)) {
+                selectedCell.moveFigure(cell);
+                if (cell.figure?.name === FigureNames.PAWN && ((cell.y === 0 && cell.figure.color === Colors.WHITE) || (cell.y === 7 && cell.figure.color === Colors.BLACK))) {
+                    indicatePromotedPawn(cell);
+                }
+                setSelectedCell(null);
 
-          if(!isValidMove(cell)) {
-            createWarningWindow();
-            return;
-          }
+                if (!isValidMove(cell)) {
+                    createWarningWindow();
+                    return;
+                }
 
-          if(pgnArr[0].trim().split(' ').length <= 1) {
-            showCongrats();
-            return;
-          }
+                if (pgnArr[0].trim().split(' ').length <= 1) {
+                    showCongrats();
+                    return;
+                }
 
-          makeComputerMove(playersColor || Colors.WHITE);
-          removePgnElement();
-        
-        } else {
-          if(cell.figure?.color === playersColor) {
-            setSelectedCell(cell);
-          }
+                setTimeout(() => {
+                    makeComputerMove(playersColor || Colors.WHITE);
+                    removePgnElement();
+                }, 500);
+
+
+            } else {
+                if (cell.figure?.color === playersColor) {
+                    setSelectedCell(cell);
+                }
+            }
+        } catch (e) {
+            alert("Failed to process your move. But we tried. Reload the page and try again");
+            console.log(e);
         }
-      } catch(e) {
-        alert("Failed to process your move. But we tried. Reload the page and try again");
-      }
     }
+
 
     function makeComputerMove(color: Colors) {
       if(pgnArr[0].split(' ').length <= 1) return;
@@ -119,7 +124,7 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
 
 
     function isValidMove(cell: Cell) {
-      
+
       const playersMove = pgnArr[0].split(' ')[0].replaceAll(/\s|\*|#/g, "");
       const tmp = playersMove.split('').find(i => i === i.toUpperCase() && i.match(/[A-Z]/) && playersMove[playersMove.indexOf(i) - 1] !== "=");
 
@@ -131,12 +136,12 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
         }
         const col = playersMove[0];
         return board.getCell(columns.indexOf(col), cell.figure.color === Colors.WHITE ? cell.y + 1 : cell.y - 1).isEmpty();
-      }  
-      
+      }
+
       const row = playersMove.split('').find(i => !isNaN(+i));
       if(!row) return false;
       if(8 - cell.y !== +row) return false;
-      
+
       const col = playersMove[playersMove.indexOf(row) - 1];
       if(!col) return false;
 
@@ -146,7 +151,7 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
     useEffect(() => {
       highLightCells()
     }, [selectedCell])
-  
+
     function updateBoard() {
       const newBoard = board.copyBoard();
       setBoard(newBoard)
@@ -156,7 +161,7 @@ const PuzzleBoardComponent: FC<PuzzleBoardComponentProps> = ({board, setBoard, p
     <div>
       <h1 className="puzzle-title">{title}</h1>
       <div className="board">
-        {board.cells.map((row, index) => 
+        {board.cells.map((row, index) =>
             <React.Fragment key={index}>
             {row.map(cell =>
                 <CellComponent

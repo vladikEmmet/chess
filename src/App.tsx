@@ -1,14 +1,14 @@
 import { lazy, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import ModeSelection from "./components/ModeSelection/ModeSelection";
-import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
+import ModeSelection from "./screens/ModeSelection/ModeSelection";
+import NotFoundPage from "./screens/NotFoundPage/NotFoundPage";
 import Bots from "./engines/Bots";
 import { GameWinner } from "./engines/Engine";
 
 const Puzzle = lazy(() => import('./components/Puzzle'));
 const SinglePlayer = lazy(() => import("./components/SinglePlayer"))
-const GameWithComputer = lazy(() => import("./components/GameWithComputer/GameWithComputer"))
+const GameWithComputer = lazy(() => import("./screens/GameWithComputer/GameWithComputer"))
 
   const App = () => {
 
