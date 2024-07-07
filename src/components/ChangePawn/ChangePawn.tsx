@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, {FC, useRef} from 'react'
 import blackBishop from '../../assets/black-bishop.png';
 import whiteBishop from '../../assets/white-bishop.png';
 import blackRook from '../../assets/black-rook.png';
@@ -11,6 +11,7 @@ import { Colors } from '../../models/Colors';
 import { Cell } from '../../models/Cell';
 import { Board } from '../../models/Board';
 import styles from "./ChangePawn.module.css";
+import promotionSound from '../../assets/sounds/promote.mp3';
 
 interface ChangePawnProps {
     color: Colors | undefined;
@@ -23,6 +24,7 @@ interface ChangePawnProps {
 
 const ChangePawn: FC<ChangePawnProps> = ({color, promotedPawn, board, handleClick}) => {
     const figures = color === Colors.WHITE ? [whiteBishop, whiteKnight, whiteQueen, whiteRook] : [blackBishop, blackKnight, blackQueen, blackRook];
+    const promotionAudio = useRef(new Audio(promotionSound));
 
   return (
     <div className={styles["change-pawn-container"]} onClick={(e: React.MouseEvent<HTMLElement>) => {
@@ -50,10 +52,11 @@ const ChangePawn: FC<ChangePawnProps> = ({color, promotedPawn, board, handleClic
                 board.changePawnToQueen(color, cell);
                 break;
         }
+        promotionAudio.current.play();
         handleClick();
     }}>
         <div className={styles["change-pawn-list"]}>
-            {figures.map(figure => 
+            {figures.map(figure =>
                 <img src={figure} alt="figure" key={figure}/>
             )}
         </div>
