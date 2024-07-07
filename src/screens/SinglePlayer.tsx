@@ -106,8 +106,8 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
                   <h3 className="current-player">{curColor}'s turn</h3>
                   {
                       isBoardRotated ?
-                          <LostFigures figures={board.lostBlackFigures} addValue={addBlackPlayerValue} diff={whiteValue < blackValue ? blackValue - whiteValue : 0} className="top"/> :
-                          <LostFigures figures={board.lostWhiteFigures} addValue={addWhitePlayerValue} diff={whiteValue > blackValue ? whiteValue - blackValue : 0} className="top"/>
+                          <LostFigures figures={board.lostBlackFigures} addValue={addBlackPlayerValue} diff={whiteValue < blackValue ? blackValue - whiteValue : 0}/> :
+                          <LostFigures figures={board.lostWhiteFigures} addValue={addWhitePlayerValue} diff={whiteValue > blackValue ? whiteValue - blackValue : 0}/>
                   }
                   <BoardComponent
                       isPuzzle={false}
@@ -123,8 +123,8 @@ const SinglePlayer: FC<SinglePlayerProps> = ({mode, whiteTime, blackTime}) => {
                   />
                   {
                       isBoardRotated ?
-                          <LostFigures figures={board.lostWhiteFigures} addValue={addWhitePlayerValue} diff={whiteValue > blackValue ? whiteValue - blackValue : 0} className="bottom"/> :
-                          <LostFigures figures={board.lostBlackFigures} addValue={addBlackPlayerValue} diff={whiteValue < blackValue ? blackValue - whiteValue : 0} className="bottom"/>
+                          <LostFigures figures={board.lostWhiteFigures} addValue={addWhitePlayerValue} diff={whiteValue > blackValue ? whiteValue - blackValue : 0}/> :
+                          <LostFigures figures={board.lostBlackFigures} addValue={addBlackPlayerValue} diff={whiteValue < blackValue ? blackValue - whiteValue : 0}/>
                   }
               </div>
             <RotateBoardButton onClick={rotateBoard}/>

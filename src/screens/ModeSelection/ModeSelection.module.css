@@ -63,6 +63,13 @@
   color: #fff;
 }
 
+.mode-selection-settings button:disabled{
+    background: #0B4747;
+    box-shadow: none;
+    color: #999;
+}
+
+
 .mode-selection-mode-settings {
   margin-bottom: 20px;
 }
