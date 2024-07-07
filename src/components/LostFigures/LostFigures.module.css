@@ -1,10 +1,15 @@
 .lost {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  height: calc(64px * 8);
+  /*width: 100%;*/
+  gap: 10px;
+  height: 50px;
+  background-color: rgba(95,118,67, 0.5);
+  border-radius: 5px;
+  width: calc(64px * 8 + 2px);
+  margin: 20px 0 20px 18px;
+  border: 1px solid #fff;
+  overflow: hidden;
 }
 
 .difference {

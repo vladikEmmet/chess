@@ -4,10 +4,10 @@ import { FetchMethods } from '../methods/FetchMethods';
 import { Board } from '../models/Board';
 import { Cell } from '../models/Cell';
 import { Colors } from '../models/Colors';
-import ChangePawn from './ChangePawn/ChangePawn';
-import DecidedPuzzle from './popups/DecidedPuzzle/DecidedPuzzle';
-import PuzzleBoardComponent from './PuzzleBoardComponent';
-import WarningWindow from './popups/WarningWindow';
+import ChangePawn from '../components/ChangePawn/ChangePawn';
+import DecidedPuzzle from '../components/popups/DecidedPuzzle/DecidedPuzzle';
+import PuzzleBoardComponent from '../components/PuzzleBoardComponent';
+import WarningWindow from '../components/popups/WarningWindow';
 
 const Puzzle = () => {
     const [board, setBoard] = useState(new Board());

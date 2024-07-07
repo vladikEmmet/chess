@@ -6,8 +6,8 @@ import NotFoundPage from "./screens/NotFoundPage/NotFoundPage";
 import Bots from "./engines/Bots";
 import { GameWinner } from "./engines/Engine";
 
-const Puzzle = lazy(() => import('./components/Puzzle'));
-const SinglePlayer = lazy(() => import("./components/SinglePlayer"))
+const Puzzle = lazy(() => import('./screens/Puzzle'));
+const SinglePlayer = lazy(() => import("./screens/SinglePlayer"))
 const GameWithComputer = lazy(() => import("./screens/GameWithComputer/GameWithComputer"))
 
   const App = () => {

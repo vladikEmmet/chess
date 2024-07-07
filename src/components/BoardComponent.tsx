@@ -26,7 +26,6 @@ interface BoardProps {
 
 export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, isRotated, startTimer, nominateWinnerByMate,  nominateDrawByStaleMate, indicatePromotedPawn, swapPlayers}) => {
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
-  const curColor = currentPlayer?.color ? currentPlayer?.color.slice(0, 1).toUpperCase() + currentPlayer?.color.slice(1) : "";
   const castlingAudio = useRef(new Audio(castlingSound));
   const captureAudio = useRef(new Audio(capturingSound));
   const movingAudio = useRef(new Audio(movingSound));
@@ -86,7 +85,6 @@ export const BoardComponent: FC<BoardProps> = ({board, setBoard, currentPlayer, 
 
   return (
     <div className="board-container">
-      <h3>{curColor} to move</h3>
       <div className={["board", isRotated ? "rotated" : ""].join(' ')}>
         {board.cells.map((row, index) =>
           <React.Fragment key={index}>
