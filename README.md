@@ -8,9 +8,9 @@
 
 ## Future work on the project will focus on:
 - Development of adaptive and responsive design;
-- Optimizing the application
-- Complete rejection of libraries used to display the graphical interface of the board (currently necessary for correct interaction with chess engines via the [UCI](https://en.wikipedia.org/wiki/Universal_Chess_Interface) protocol)
-- Bug fix
+- Optimizing the application;
+- Complete rejection of libraries used to display the graphical interface of the board (currently necessary for correct interaction with chess engines via the [UCI](https://en.wikipedia.org/wiki/Universal_Chess_Interface) protocol);
+- Bug fix;
 
 ## Project setup
 1) Install all dependencies:
@@ -20,3 +20,7 @@
 3) Open the project in your browser:
  ##  [`http://localhost:3000`](http://localhost:3000)
 4) Everything is ready to go. Enjoy the game!:)
+
+### [Demo](https://chess-ecru-kappa.vercel.app/)
+
+*Author: [Vladislav Obedkov](https://www.vladislavobedkov.me)*
