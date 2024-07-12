@@ -8,9 +8,9 @@
 
 ## Future work on the project will focus on:
 - Development of adaptive and responsive design;
-- Optimizing the application
-- Complete rejection of libraries used to display the graphical interface of the board (currently necessary for correct interaction with chess engines via the [UCI](https://en.wikipedia.org/wiki/Universal_Chess_Interface) protocol)
-- Bug fix
+- Optimizing the application;
+- Complete rejection of libraries used to display the graphical interface of the board (currently necessary for correct interaction with chess engines via the [UCI](https://en.wikipedia.org/wiki/Universal_Chess_Interface) protocol);
+- Bug fix;
 
 ## Project setup
 1) Install all dependencies:
